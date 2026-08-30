@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.4",
+    "concurrently": "^10.0.5",
+    "dotenv": "^17.4.2",
+    "live-server": "^1.2.2"
+  },
+  "name": "eco-pay-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "supabase-backend.js",
+  "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"live-server --port=8000\" \"node supabase-backend.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaidirwell/eco-pay.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chaidirwell/eco-pay/issues"
+  },
+  "homepage": "https://github.com/chaidirwell/eco-pay#readme"
+}

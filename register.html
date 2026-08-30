@@ -28,10 +28,19 @@
     </script>
 </head>
 
-<body class="bg-darkBg text-white min-h-screen flex items-center justify-center p-4 font-sans antialiased">
+<body class="bg-darkBg text-slate-200 min-h-screen font-sans flex items-center justify-center p-0 overflow-x-hidden">
 
+    <!-- Efek Cahaya Latar (Hanya Desktop) -->
     <div
-        class="w-full max-w-md bg-gray-900/50 backdrop-blur-lg p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-800">
+        class="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block">
+    </div>
+    <div
+        class="fixed bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-cyan/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block">
+    </div>
+
+    <!-- MAIN APP CONTAINER (Full Screen) -->
+    <div id="phone-frame"
+        class="relative w-full max-w-md mx-auto min-h-screen bg-[#080d16] shadow-none flex flex-col z-10 overflow-x-hidden md:rounded-2xl md:my-4 md:border md:border-white/10 md:min-h-[800px] p-8">
 
         <div class="text-center mb-8 flex flex-col items-center">
             <div class="w-16 h-16 mb-4 rounded-2xl bg-[#080d16] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center border border-gray-800">

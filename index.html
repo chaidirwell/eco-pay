@@ -40,7 +40,7 @@
     </script>
 </head>
 
-<body class="bg-darkBg text-slate-200 min-h-screen font-sans flex items-center justify-center p-0">
+<body class="bg-darkBg text-slate-200 min-h-screen font-sans flex items-center justify-center p-0 overflow-x-hidden">
 
     <!-- Efek Cahaya Latar (Hanya Desktop) -->
     <div
@@ -52,7 +52,7 @@
 
     <!-- MAIN APP CONTAINER (Full Screen) -->
     <div id="phone-frame"
-        class="relative w-full min-h-screen bg-[#080d16] shadow-none overflow-hidden flex flex-col z-10">
+        class="relative w-full max-w-full mx-auto min-h-screen bg-[#080d16] shadow-none flex flex-col z-10 overflow-x-hidden md:rounded-2xl md:my-4 md:border md:border-white/10">
 
         <!-- Status Bar -->
         <div
@@ -82,12 +82,12 @@
                 <form id="login-form" class="w-full space-y-4">
                     <div class="relative">
                         <i class="ph-fill ph-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="text" id="username" placeholder="Username / Email" required
+                        <input type="text" id="username" placeholder="Username / Email" required autocomplete="off"
                             class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
                     </div>
                     <div class="relative">
                         <i class="ph-fill ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="password" id="password" placeholder="Password" required
+                        <input type="password" id="password" placeholder="Password" required autocomplete="new-password"
                             class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
                     </div>
                     <button type="submit"
@@ -95,6 +95,10 @@
                         Masuk
                     </button>
                 </form>
+
+                <p class="text-xs text-gray-400 text-center mt-6">
+                    Belum punya akun? <a href="register.html" class="text-emerald font-bold hover:underline transition-all">Daftar sekarang</a>
+                </p>
             </div>
         </div>
         <!-- ==============================================
@@ -559,17 +563,16 @@
         </div>
 
         <!-- ==============================================
-             MODAL PEMINJAMAN (Bottom Sheet / Full width inside phone-frame)
+             MODAL / BOTTOM SHEET (SEWA ASET)
              ============================================== -->
-        <div id="modal-pinjam"
-            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
-
+        <div id="modal-container"
+            class="fixed inset-0 z-[100] hidden flex-col justify-end pointer-events-none overflow-hidden">
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
                 id="modal-backdrop"></div>
-
+            
             <!-- Panel Content -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+            <div class="relative bg-[#080d16] border-t md:border border-white/10 rounded-t-3xl md:rounded-3xl w-full md:w-3/4 lg:w-1/2 md:max-w-lg mx-auto md:mb-10 max-h-[90vh] flex flex-col transform translate-y-full md:translate-y-10 transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
                 id="modal-panel">
 
                 <!-- Pill marker for swipe -->
@@ -631,7 +634,7 @@
                                 <i class="ph-fill ph-coin text-yellow-500 text-xl animate-pulse"></i>
                             </div>
                             <div>
-                                <h4 class="text-xs font-bold text-yellow-500 mb-0.5">Bonus Cashback</h4>
+                                <h4 class="text-xs font-bold text-yellow-500 mb-0.5">Promo Ecopay</h4>
                                 <p class="text-[10px] text-amber-500/80 leading-relaxed">Dapatkan <span
                                         id="modal-cashback"
                                         class="font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 rounded shadow-sm inline-block border border-orange-400/50">0
@@ -659,14 +662,14 @@
              MODAL REVIEW (Bottom Sheet)
              ============================================== -->
         <div id="modal-review"
-            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
+            class="fixed inset-0 z-[100] hidden flex-col justify-end pointer-events-none overflow-hidden">
 
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
                 id="modal-review-backdrop"></div>
 
             <!-- Panel Content -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+            <div class="relative bg-[#080d16] border-t md:border border-white/10 rounded-t-3xl md:rounded-3xl w-full md:w-3/4 lg:w-1/2 md:max-w-lg mx-auto md:mb-10 max-h-[90vh] flex flex-col transform translate-y-full md:translate-y-10 transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
                 id="modal-review-panel">
 
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
@@ -697,8 +700,8 @@
                             class="w-full bg-transparent text-white text-sm focus:outline-none resize-none"></textarea>
                     </div>
 
-                    <button id="btn-submit-review"
-                        class="w-full bg-yellow-500 text-darkBg font-bold py-3.5 rounded-xl hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.2)] text-[12px] uppercase tracking-wide">
+                    <button id="btn-submit-review" type="button"
+                        class="relative z-50 pointer-events-auto w-full bg-yellow-500 text-darkBg font-bold py-3.5 rounded-xl hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.2)] text-[12px] uppercase tracking-wide cursor-pointer">
                         Kirim Ulasan
                     </button>
                 </div>
@@ -709,12 +712,12 @@
              MODAL PILIH ASET PROMOSI (Bottom Sheet)
              ============================================== -->
         <div id="modal-promosi"
-            class="absolute inset-0 z-[110] hidden flex-col justify-end pointer-events-none overflow-hidden">
+            class="fixed inset-0 z-[110] hidden flex-col justify-end pointer-events-none overflow-hidden">
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
                 id="modal-promosi-backdrop"></div>
             <!-- Panel -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[85vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+            <div class="relative bg-[#080d16] border-t md:border border-white/10 rounded-t-3xl md:rounded-3xl w-full md:w-3/4 lg:w-1/2 md:max-w-lg mx-auto md:mb-10 max-h-[85vh] flex flex-col transform translate-y-full md:translate-y-10 transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
                 id="modal-promosi-panel">
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
                 <button id="modal-promosi-close"

@@ -1,16 +1,21 @@
-document.addEventListener("DOMContentLoaded", function () {
+// ==========================================
+// GLOBAL SCOPE — shared across all DOMContentLoaded blocks
+// ==========================================
+let supabase = null;
+let currentUser = null;
 
-    // ==========================================
-    // 1. INISIALISASI KLIEN SUPABASE
-    // ==========================================
+// Inisialisasi Supabase segera saat skrip dimuat
+(function initSupabase() {
     const SUPABASE_URL = 'https://emlwchpnkruibboxviqv.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_srQXJ1lskqDWST8vVb0VFg_0NHCRgxB';
-
-    // Inisialisasi Klien 
-    let supabase = null;
     if (SUPABASE_URL && SUPABASE_URL !== 'ISI_SUPABASE_URL_ANDA') {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     }
+})();
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // ==========================================
 
    async function uploadAssetImage(file) {
 
@@ -36,8 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return publicUrl.publicUrl;
 }
-    let currentUser = null;
-
     // ==========================================
     // 2. SISTEM AKUN & AUTENTIKASI
     // ==========================================
@@ -48,6 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (loginForm) {
         loginForm.addEventListener("submit", async function(e) {
             e.preventDefault();
+            const submitBtn = loginForm.querySelector('button[type="submit"]');
+            if (submitBtn.disabled) return;
+            
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="ph-bold ph-spinner-gap animate-spin"></i> Loading...';
+
             const userInp = document.getElementById("username").value.trim();
             const passInp = document.getElementById("password").value;
 
@@ -58,8 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (error) {
                     alert(error.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
                     return;
                 }
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                
                 currentUser = data.user;
                 console.log("CURRENT USER SUPABASE:", currentUser);
                 console.log("USER ID:", currentUser.id);
@@ -106,9 +122,21 @@ async function updateCoinsUI() {
     let coins = profile.eco_points || 0;
     const navName = document.getElementById("nav-name");
 
-if (navName) {
-    navName.innerText = profile.nama;
-}
+    if (navName) {
+        navName.innerHTML = `${profile.nama} <span class="ml-2 text-[10px] text-red-500 hover:underline cursor-pointer" onclick="logout()">Keluar</span>`;
+    }
+    
+    // Define global logout function
+    window.logout = async function() {
+        // Sign out dari backend Supabase
+        await supabase.auth.signOut();
+        // Bersihkan semua state lokal dan session
+        localStorage.clear();
+        sessionStorage.clear();
+        // Paksa muat ulang halaman dari awal agar bersih tanpa sisa cache JS
+        window.location.reload();
+    };
+
     const navBalance = document.getElementById("nav-balance");
     const tabBalance = document.getElementById("tab-balance");
 
@@ -379,20 +407,21 @@ if (navName) {
             
             if (isPromoted) {
                 if (rekomendasiGrid) rekomendasiGrid.insertAdjacentHTML("beforeend", html);
-                hasPromoted = true;
             } else {
                 catalogGrid.insertAdjacentHTML("beforeend", html);
             }
         }
         
         if (containerRekomendasi) {
-            if (hasPromoted) {
+            if (rekomendasiGrid && rekomendasiGrid.children.length > 0) {
                 containerRekomendasi.classList.remove("hidden");
             } else {
                 containerRekomendasi.classList.add("hidden");
             }
         }
     }
+    window.loadAllAssets = loadAllAssets;
+
     async function loadMyAssets() {
           console.log("USER UNTUK ASET SAYA:", currentUser);
     if (!currentUser) return;
@@ -1254,19 +1283,58 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    document.getElementById("btn-submit-review")?.addEventListener("click", function() {
+    document.getElementById("btn-submit-review")?.addEventListener("click", async function() {
         if (currentRating === 0) {
             alert("Mohon berikan rating bintang terlebih dahulu.");
             return;
         }
         
-        closeReviewModal();
-        
-        const toast = document.createElement('div');
-        toast.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[1000] bg-emerald/90 text-white px-5 py-2.5 rounded-full font-bold text-xs md:text-sm shadow-2xl animate-fade-in flex items-center gap-2 border border-emerald/50 whitespace-nowrap';
-        toast.innerHTML = `<i class="ph-bold ph-check-circle text-lg"></i> Ulasan ${currentRating} Bintang Terkirim!`;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.classList.add('opacity-0', 'transition-opacity'); setTimeout(() => toast.remove(), 300); }, 3000);
+        if (!currentUser) {
+            alert("Anda harus login untuk memberikan ulasan.");
+            return;
+        }
+
+        const reviewText = document.getElementById("review-text") ? document.getElementById("review-text").value : "";
+
+        // Tampilkan loading state
+        const submitBtn = document.getElementById("btn-submit-review");
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i> Mengirim...';
+        submitBtn.disabled = true;
+
+        try {
+            const payload = {
+                asset_id: currentReviewAssetId,
+                user_id: currentUser.id,
+                reviewer_name: currentUser.user_metadata?.nama || currentUser.email.split('@')[0],
+                rating: currentRating,
+                comment: reviewText
+            };
+
+            const { error } = await supabase.from('reviews').insert([payload]);
+            if (error) throw error;
+
+            closeReviewModal();
+            
+            // Notifikasi sukses
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[1000] bg-emerald/90 text-white px-5 py-2.5 rounded-full font-bold text-xs md:text-sm shadow-2xl animate-fade-in flex items-center gap-2 border border-emerald/50 whitespace-nowrap';
+            toast.innerHTML = `<i class="ph-bold ph-check-circle text-lg"></i> Ulasan ${currentRating} Bintang Terkirim!`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.classList.add('opacity-0', 'transition-opacity'); setTimeout(() => toast.remove(), 300); }, 3000);
+
+            // Fetch ulang aset agar ulasan update real-time
+            if (typeof window.loadAllAssets === 'function') {
+                await window.loadAllAssets();
+            }
+
+        } catch (error) {
+            console.error("Gagal mengirim ulasan:", error);
+            alert("Gagal mengirim ulasan. Pastikan koneksi stabil.");
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
     });
 
     // ==========================================
