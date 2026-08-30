@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register EcoPay</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: '#34A853',
+                        cyan: '#1A73E8',
+                        darkBg: '#12161f',
+                    },
+                    backgroundImage: {
+                        'accent-gradient': 'linear-gradient(135deg, #34A853, #1A73E8)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-darkBg text-white min-h-screen flex items-center justify-center p-4 font-sans antialiased">
+
+    <div
+        class="w-full max-w-md bg-gray-900/50 backdrop-blur-lg p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-gray-800">
+
+        <div class="text-center mb-8 flex flex-col items-center">
+            <div class="w-16 h-16 mb-4 rounded-2xl bg-[#080d16] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center border border-gray-800">
+                <img src="assets/img/ecopay_logo.png" alt="Eco-Pay Logo" class="w-full h-full object-contain">
+            </div>
+            <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-accent-gradient mb-2">Daftar EcoPay</h2>
+            <p class="text-gray-400 text-sm">Bergabunglah dan mulai sirkular ekonomi sekarang.</p>
+        </div>
+
+        <div class="space-y-5">
+            <div>
+                <label for="nama" class="block text-sm font-medium text-gray-300 mb-1">Nama Lengkap</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="ph ph-user text-gray-500 text-lg"></i>
+                    </div>
+                    <input id="nama" type="text"
+                        class="block w-full pl-10 pr-3 py-3 border border-gray-700 rounded-xl leading-5 bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald transition duration-200"
+                        placeholder="Masukkan nama Anda">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="ph ph-envelope text-gray-500 text-lg"></i>
+                    </div>
+                    <input id="email" type="email"
+                        class="block w-full pl-10 pr-3 py-3 border border-gray-700 rounded-xl leading-5 bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan focus:border-cyan transition duration-200"
+                        placeholder="nama@email.com">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="ph ph-lock text-gray-500 text-lg"></i>
+                    </div>
+                    <input id="password" type="password"
+                        class="block w-full pl-10 pr-3 py-3 border border-gray-700 rounded-xl leading-5 bg-gray-800 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald transition duration-200"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <button id="btnRegister"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-accent-gradient hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-emerald transition duration-300 ease-in-out transform hover:-translate-y-0.5">
+                Mendaftar Sekarang
+            </button>
+        </div>
+
+        <div class="mt-6 text-center text-sm text-gray-400">
+            Sudah punya akun? <a href="index.html"
+                class="font-medium text-emerald hover:text-cyan transition-colors">Masuk di sini</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/auth.js"></script>
+
+</body>
+
+</html>
