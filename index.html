@@ -43,14 +43,20 @@
 <body class="bg-darkBg text-slate-200 min-h-screen font-sans flex items-center justify-center p-0">
 
     <!-- Efek Cahaya Latar (Hanya Desktop) -->
-    <div class="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block"></div>
-    <div class="fixed bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-cyan/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block"></div>
+    <div
+        class="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] bg-emerald/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block">
+    </div>
+    <div
+        class="fixed bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-cyan/20 blur-[120px] rounded-full pointer-events-none z-0 hidden md:block">
+    </div>
 
     <!-- MAIN APP CONTAINER (Full Screen) -->
-    <div id="phone-frame" class="relative w-full min-h-screen bg-[#080d16] shadow-none overflow-hidden flex flex-col z-10">
-        
+    <div id="phone-frame"
+        class="relative w-full min-h-screen bg-[#080d16] shadow-none overflow-hidden flex flex-col z-10">
+
         <!-- Status Bar -->
-        <div class="h-6 w-full hidden justify-between items-center px-6 pt-1 text-[10px] font-medium text-gray-400 absolute top-0 left-0 z-50 bg-[#080d16]/90 backdrop-blur-sm pointer-events-none">
+        <div
+            class="h-6 w-full hidden justify-between items-center px-6 pt-1 text-[10px] font-medium text-gray-400 absolute top-0 left-0 z-50 bg-[#080d16]/90 backdrop-blur-sm pointer-events-none">
             <span>09:41</span>
             <div class="flex items-center gap-1.5">
                 <i class="ph-fill ph-cell-signal-full"></i>
@@ -61,25 +67,31 @@
         <!-- ==============================================
              LAYAR LOGIN
              ============================================== -->
-        <div id="login-screen" class="absolute inset-0 z-40 bg-[#080d16] flex flex-col items-center justify-center p-6 transition-opacity duration-700">
+        <div id="login-screen"
+            class="absolute inset-0 z-40 bg-[#080d16] flex flex-col items-center justify-center p-6 transition-opacity duration-700">
             <div class="w-full max-w-sm mx-auto flex flex-col items-center mt-[-10vh]">
-                <div class="w-20 h-20 mb-6 rounded-2xl bg-[#080d16] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center border border-gray-800">
+                <div
+                    class="w-20 h-20 mb-6 rounded-2xl bg-[#080d16] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center border border-gray-800">
                     <img src="assets/img/ecopay_logo.png" alt="Eco-Pay Logo" class="w-full h-full object-contain">
                 </div>
-                
-                <h1 class="text-3xl font-bold text-white mb-2 tracking-tight text-center">Digital <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan">ECO-PAY</span></h1>
+
+                <h1 class="text-3xl font-bold text-white mb-2 tracking-tight text-center">Digital <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan">ECO-PAY</span></h1>
                 <p class="text-sm text-gray-400 text-center mb-8">Ubah aset idle Anda menjadi cuan.</p>
-                
+
                 <form id="login-form" class="w-full space-y-4">
                     <div class="relative">
                         <i class="ph-fill ph-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="text" id="username" placeholder="Username / Email" required class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
+                        <input type="text" id="username" placeholder="Username / Email" required
+                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
                     </div>
                     <div class="relative">
                         <i class="ph-fill ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="password" id="password" placeholder="Password" required class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
+                        <input type="password" id="password" placeholder="Password" required
+                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
                     </div>
-                    <button type="submit" class="w-full bg-emerald text-darkBg font-bold py-4 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-2">
+                    <button type="submit"
+                        class="w-full bg-emerald text-darkBg font-bold py-4 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-2">
                         Masuk
                     </button>
                 </form>
@@ -88,69 +100,94 @@
         <!-- ==============================================
              ANTARMUKA UTAMA APLIKASI
              ============================================== -->
-        <div id="app-interface" class="hidden flex-col h-full overflow-y-auto overflow-x-hidden scrollbar-hide pt-2 md:pt-6 pb-8 relative w-full">
-            
+        <div id="app-interface"
+            class="hidden flex-col h-full overflow-y-auto overflow-x-hidden scrollbar-hide pt-2 md:pt-6 pb-8 relative w-full">
+
             <!-- HEADER -->
             <header class="px-5 py-4 sticky top-0 bg-[#080d16]/95 backdrop-blur-md z-30 border-b border-white/5 w-full">
                 <div class="max-w-6xl mx-auto flex justify-between items-center w-full">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-[#080d16] overflow-hidden flex items-center justify-center border border-gray-800">
-                        <img src="assets/img/ecopay_logo.png" alt="Eco-Pay Logo" class="w-full h-full object-contain">
-                    </div>
-<span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan tracking-tight">
-    ECO-PAY
-</span>
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-9 h-9 rounded-lg bg-[#080d16] overflow-hidden flex items-center justify-center border border-gray-800">
+                            <img src="assets/img/ecopay_logo.png" alt="Eco-Pay Logo"
+                                class="w-full h-full object-contain">
+                        </div>
+                        <span
+                            class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan tracking-tight">
+                            ECO-PAY
+                        </span>
 
-<span id="nav-name" class="block text-xs text-gray-400"></span>                </div>
-                
-                <div class="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-full cursor-pointer hover:bg-yellow-500/20 transition-colors">
-                    <i class="ph-fill ph-coin text-yellow-500 text-sm animate-pulse"></i>
-                    <span class="text-xs font-bold text-white"><span id="nav-balance">0</span> <span class="text-[10px] text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase ml-0.5">Coins</span></span>
-                </div>
+                        <span id="nav-name" class="block text-xs text-gray-400"></span>
+                    </div>
+
+                    <div
+                        class="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-full cursor-pointer hover:bg-yellow-500/20 transition-colors">
+                        <i class="ph-fill ph-coin text-yellow-500 text-sm animate-pulse"></i>
+                        <span class="text-xs font-bold text-white"><span id="nav-balance">0</span> <span
+                                class="text-[10px] text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase ml-0.5">Coins</span></span>
+                    </div>
                 </div>
             </header>
 
             <!-- MENU NAVIGASI -->
             <div class="px-5 py-5 max-w-6xl mx-auto w-full">
                 <div class="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-5">
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-emerald/10 hover:border-emerald/30 transition-all tab-active" data-target="tab-content-cari">
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-emerald/10 hover:border-emerald/30 transition-all tab-active"
+                        data-target="tab-content-cari">
                         <div class="w-10 h-10 rounded-full bg-emerald/10 flex items-center justify-center text-emerald">
                             <i class="ph-bold ph-magnifying-glass text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Cari<br> Aset</span>
                     </button>
-                    
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-cyan/10 hover:border-cyan/30 transition-all" data-target="tab-content-saya">
+
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-cyan/10 hover:border-cyan/30 transition-all"
+                        data-target="tab-content-saya">
                         <div class="w-10 h-10 rounded-full bg-cyan/10 flex items-center justify-center text-cyan">
                             <i class="ph-bold ph-plus text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Aset<br> Saya</span>
                     </button>
 
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" data-target="tab-content-transaksi">
-                        <div class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500">
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all"
+                        data-target="tab-content-transaksi">
+                        <div
+                            class="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500">
                             <i class="ph-bold ph-package text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Transaksi</span>
                     </button>
 
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-yellow-500/10 hover:border-yellow-500/30 transition-all" data-target="tab-content-points">
-                        <div class="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-yellow-500/10 hover:border-yellow-500/30 transition-all"
+                        data-target="tab-content-points">
+                        <div
+                            class="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500">
                             <i class="ph-bold ph-coin text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Eco-Coins</span>
                     </button>
 
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-pink-500/10 hover:border-pink-500/30 transition-all" data-target="tab-content-reward">
-                        <div class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center text-pink-500">
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-pink-500/10 hover:border-pink-500/30 transition-all"
+                        data-target="tab-content-reward">
+                        <div
+                            class="w-10 h-10 rounded-full bg-pink-500/10 flex items-center justify-center text-pink-500">
                             <i class="ph-bold ph-gift text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Reward</span>
                     </button>
 
-                    <button class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all relative" data-target="tab-content-notif" id="btn-nav-notif">
-                        <div id="notif-badge" class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border border-[#080d16] hidden"></div>
-                        <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
+                    <button
+                        class="app-menu-btn flex flex-col items-center justify-center bg-white/5 border border-white/10 rounded-2xl p-3 gap-2 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all relative"
+                        data-target="tab-content-notif" id="btn-nav-notif">
+                        <div id="notif-badge"
+                            class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border border-[#080d16] hidden">
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500">
                             <i class="ph-bold ph-bell-ringing text-lg"></i>
                         </div>
                         <span class="text-[10px] font-bold text-white text-center leading-tight">Notifikasi</span>
@@ -165,25 +202,32 @@
 
                 <!-- TAB 1: CARI ASET (KATALOG) -->
                 <div id="tab-content-cari" class="tab-pane block animate-fade-in w-full">
-                    
+
                     <div class="flex flex-col mb-5 gap-3">
                         <div class="relative w-full">
-                            <i class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                            <input type="text" id="searchInput" placeholder="Cari barang..." class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-white focus:outline-none focus:border-cyan/50 text-sm transition-colors">
+                            <i
+                                class="ph-bold ph-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                            <input type="text" id="searchInput" placeholder="Cari barang..."
+                                class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-10 pr-4 py-2.5 text-white focus:outline-none focus:border-cyan/50 text-sm transition-colors">
                         </div>
                     </div>
-                    
+
                     <!-- REKOMENDASI -->
                     <div id="container-rekomendasi" class="mb-8 hidden">
-                        <h2 class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 mb-3 flex items-center gap-2"><i class="ph-fill ph-star text-yellow-500"></i> Produk Direkomendasikan</h2>
-                        <div id="rekomendasi-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
+                        <h2
+                            class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 mb-3 flex items-center gap-2">
+                            <i class="ph-fill ph-star text-yellow-500"></i> Produk Direkomendasikan
+                        </h2>
+                        <div id="rekomendasi-grid"
+                            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
                             <!-- JS merender rekomendasi -->
                         </div>
                     </div>
 
                     <!-- KATALOG UMUM -->
                     <div>
-                        <h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2"><i class="ph-bold ph-package text-gray-400"></i> Semua Aset & Barang Sewa</h2>
+                        <h2 class="text-lg font-bold text-white mb-3 flex items-center gap-2"><i
+                                class="ph-bold ph-package text-gray-400"></i> Semua Aset & Barang Sewa</h2>
                         <!-- GRID RESPONSIVE -->
                         <div id="catalog-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
                             <!-- JS merender aset ke sini dari localStorage -->
@@ -204,84 +248,123 @@
                         </div>
 
                     </div>
-                        <div>
-                            <h2 class="text-lg font-bold text-white mb-1">Upload Aset Baru</h2>
-                        <p class="text-[11px] text-gray-400 mb-5">Dapatkan Eco-Coins tambahan dari penyewaan aset Anda.</p>
-                        
+                    <div>
+                        <h2 class="text-lg font-bold text-white mb-1">Upload Aset Baru</h2>
+                        <p class="text-[11px] text-gray-400 mb-5">Dapatkan Eco-Coins tambahan dari penyewaan aset Anda.
+                        </p>
+
                         <form id="form-upload-aset" class="space-y-4">
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Nama Barang</label>
-                                    <input type="text" id="upload-nama" placeholder="Misal: Kamera Sony" required class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm">
+                                    <label
+                                        class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Nama
+                                        Barang</label>
+                                    <input type="text" id="upload-nama" placeholder="Misal: Kamera Sony" required
+                                        class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm">
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Kategori</label>
-                                    <select id="upload-kategori" class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm appearance-none cursor-pointer">
-                                        <option value="Aset Ruang & Infrastruktur Berat">Aset Ruang & Infrastruktur Berat</option>
+                                    <label
+                                        class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Kategori</label>
+                                    <select id="upload-kategori"
+                                        class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm appearance-none cursor-pointer">
+                                        <option value="Aset Ruang & Infrastruktur Berat">Aset Ruang & Infrastruktur
+                                            Berat</option>
                                         <option value="Alat Produksi dan Mesin">Alat Produksi dan Mesin</option>
-                                        <option value="Kendaraan & Alat Transportasi Logistik">Kendaraan & Alat Transportasi Logistik</option>
+                                        <option value="Kendaraan & Alat Transportasi Logistik">Kendaraan & Alat
+                                            Transportasi Logistik</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Lokasi Pengambilan</label>
-                                <input type="text" id="upload-lokasi" placeholder="Geser peta..." required class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm mb-3">
-                                
+                                <label
+                                    class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Lokasi
+                                    Pengambilan</label>
+                                <input type="text" id="upload-lokasi" placeholder="Geser peta..." required
+                                    class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm mb-3">
+
                                 <!-- KOTAK PETA -->
-                                <div class="relative w-full h-40 rounded-xl overflow-hidden border border-gray-800 bg-gray-900 z-0 mb-3 group">
+                                <div
+                                    class="relative w-full h-40 rounded-xl overflow-hidden border border-gray-800 bg-gray-900 z-0 mb-3 group">
                                     <div id="map-picker" class="w-full h-full cursor-crosshair"></div>
-                                    
-                                    <div class="absolute top-2 left-1/2 -translate-x-1/2 bg-[#080d16]/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-gray-700 z-[400] pointer-events-none shadow-md opacity-100">
-                                        <p class="text-[9px] text-gray-300 font-medium whitespace-nowrap">Geser peta menetapkan titik</p>
+
+                                    <div
+                                        class="absolute top-2 left-1/2 -translate-x-1/2 bg-[#080d16]/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-gray-700 z-[400] pointer-events-none shadow-md opacity-100">
+                                        <p class="text-[9px] text-gray-300 font-medium whitespace-nowrap">Geser peta
+                                            menetapkan titik</p>
                                     </div>
-                                    
-                                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[400] pointer-events-none flex flex-col items-center">
-                                        <div class="bg-darkBg/90 text-[8px] text-white px-2 py-1 rounded shadow mb-1 border border-white/10 whitespace-nowrap animate-bounce font-bold tracking-wider uppercase">Lokasi Aset</div>
-                                        <i class="ph-fill ph-map-pin text-cyan text-3xl drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)]"></i>
+
+                                    <div
+                                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[400] pointer-events-none flex flex-col items-center">
+                                        <div
+                                            class="bg-darkBg/90 text-[8px] text-white px-2 py-1 rounded shadow mb-1 border border-white/10 whitespace-nowrap animate-bounce font-bold tracking-wider uppercase">
+                                            Lokasi Aset</div>
+                                        <i
+                                            class="ph-fill ph-map-pin text-cyan text-3xl drop-shadow-[0_5px_10px_rgba(0,0,0,0.8)]"></i>
                                     </div>
                                 </div>
-                                <button type="button" id="btn-current-location" class="w-full bg-[#080d16]/80 backdrop-blur-md text-cyan text-[10px] font-bold py-3 rounded-xl border border-cyan/30 flex items-center justify-center gap-2 hover:bg-cyan/20 transition-all uppercase tracking-widest">
+                                <button type="button" id="btn-current-location"
+                                    class="w-full bg-[#080d16]/80 backdrop-blur-md text-cyan text-[10px] font-bold py-3 rounded-xl border border-cyan/30 flex items-center justify-center gap-2 hover:bg-cyan/20 transition-all uppercase tracking-widest">
                                     <i class="ph-bold ph-crosshair text-base"></i> Gunakan GPS Saat Ini
                                 </button>
                             </div>
 
                             <div class="grid grid-cols-1 gap-4">
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Tarif Sewa (Rp/Hari)</label>
+                                    <label
+                                        class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Tarif
+                                        Sewa (Rp/Hari)</label>
                                     <div class="relative">
-                                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">Rp</span>
-                                        <input type="number" id="upload-tarif" placeholder="150000" required class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm font-mono" min="1">
+                                        <span
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">Rp</span>
+                                        <input type="number" id="upload-tarif" placeholder="150000" required
+                                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-12 pr-4 py-3 text-white focus:outline-none focus:border-cyan/50 text-sm font-mono"
+                                            min="1">
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Kondisi Fisik Barang</label>
-                                    <div class="bg-[#030712] border border-gray-800 rounded-xl px-4 py-3" id="upload-star-container" data-selected="0">
+                                    <label
+                                        class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Kondisi
+                                        Fisik Barang</label>
+                                    <div class="bg-[#030712] border border-gray-800 rounded-xl px-4 py-3"
+                                        id="upload-star-container" data-selected="0">
                                         <div class="flex justify-center gap-3 mb-2">
-                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star" data-val="1"></i>
-                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star" data-val="2"></i>
-                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star" data-val="3"></i>
-                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star" data-val="4"></i>
-                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star" data-val="5"></i>
+                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star"
+                                                data-val="1"></i>
+                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star"
+                                                data-val="2"></i>
+                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star"
+                                                data-val="3"></i>
+                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star"
+                                                data-val="4"></i>
+                                            <i class="ph-fill ph-star text-3xl text-gray-700 cursor-pointer hover:scale-110 transition-all upload-star"
+                                                data-val="5"></i>
                                         </div>
-                                        <p id="upload-star-label" class="text-center text-[11px] text-gray-500">Pilih kondisi barang Anda</p>
+                                        <p id="upload-star-label" class="text-center text-[11px] text-gray-500">Pilih
+                                            kondisi barang Anda</p>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Foto Barang</label>
-                                    <label class="border-2 border-dashed border-gray-700 hover:border-cyan/50 rounded-xl p-3 flex items-center justify-center cursor-pointer transition-colors h-[50px] bg-white/5 hover:bg-cyan/5">
+                                    <label
+                                        class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Foto
+                                        Barang</label>
+                                    <label
+                                        class="border-2 border-dashed border-gray-700 hover:border-cyan/50 rounded-xl p-3 flex items-center justify-center cursor-pointer transition-colors h-[50px] bg-white/5 hover:bg-cyan/5">
                                         <i class="ph-bold ph-image text-gray-400 mr-2 text-base"></i>
-                                        <span class="text-[11px] text-gray-300 font-bold truncate" id="upload-filename">Unggah Foto...</span>
+                                        <span class="text-[11px] text-gray-300 font-bold truncate"
+                                            id="upload-filename">Unggah Foto...</span>
                                         <input type="file" id="upload-file" accept="image/*" class="hidden">
                                     </label>
                                 </div>
                             </div>
-                            
-                            <div id="upload-preview-container" class="hidden h-40 rounded-xl overflow-hidden border border-white/10 relative mt-4">
+
+                            <div id="upload-preview-container"
+                                class="hidden h-40 rounded-xl overflow-hidden border border-white/10 relative mt-4">
                                 <img id="upload-preview-img" src="" class="w-full h-full object-cover">
                             </div>
 
-                            <button type="submit" class="w-full bg-gradient-to-r from-emerald to-cyan text-[#080d16] font-bold py-3.5 rounded-xl hover:opacity-90 transition-all text-sm mt-6 uppercase tracking-wide">
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-emerald to-cyan text-[#080d16] font-bold py-3.5 rounded-xl hover:opacity-90 transition-all text-sm mt-6 uppercase tracking-wide">
                                 Publikasikan Aset
                             </button>
                         </form>
@@ -302,25 +385,36 @@
                 <div id="tab-content-points" class="tab-pane hidden animate-fade-in w-full">
                     <div>
                         <h2 class="text-lg font-bold text-white mb-4">Dompet Eco-Coins</h2>
-                        <div class="glass-card p-6 bg-gradient-to-br from-yellow-500/20 to-[#030712] border border-yellow-500/30 rounded-3xl relative overflow-hidden mb-5 text-center flex flex-col justify-center">
-                            <i class="ph-fill ph-coin absolute -right-4 -bottom-4 text-[10rem] text-yellow-500/10 rotate-12"></i>
+                        <div
+                            class="glass-card p-6 bg-gradient-to-br from-yellow-500/20 to-[#030712] border border-yellow-500/30 rounded-3xl relative overflow-hidden mb-5 text-center flex flex-col justify-center">
+                            <i
+                                class="ph-fill ph-coin absolute -right-4 -bottom-4 text-[10rem] text-yellow-500/10 rotate-12"></i>
                             <div class="z-10 relative">
-                                <p class="text-[10px] text-yellow-500/80 mb-2 tracking-widest uppercase font-bold">Saldo Cashback</p>
-                                <p class="text-4xl font-bold text-yellow-500 flex items-baseline justify-center gap-1 tracking-tight">
-                                    <span id="tab-balance">0</span> <span class="text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Coins</span>
+                                <p class="text-[10px] text-yellow-500/80 mb-2 tracking-widest uppercase font-bold">Saldo
+                                    Cashback</p>
+                                <p
+                                    class="text-4xl font-bold text-yellow-500 flex items-baseline justify-center gap-1 tracking-tight">
+                                    <span id="tab-balance">0</span> <span
+                                        class="text-base font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Coins</span>
                                 </p>
                             </div>
                             <div class="z-10 relative mt-4">
-                                <button onclick="document.querySelector('.app-menu-btn[data-target=\'tab-content-reward\']').click();" class="bg-yellow-500 text-darkBg px-6 py-2 rounded-full font-bold text-xs shadow-lg hover:bg-yellow-400 hover:scale-105 transition-all">Tukar Koin</button>
+                                <button
+                                    onclick="document.querySelector('.app-menu-btn[data-target=\'tab-content-reward\']').click();"
+                                    class="bg-yellow-500 text-darkBg px-6 py-2 rounded-full font-bold text-xs shadow-lg hover:bg-yellow-400 hover:scale-105 transition-all">Tukar
+                                    Koin</button>
                             </div>
                         </div>
-                        <p class="text-xs text-gray-400 leading-relaxed text-center bg-white/5 p-4 rounded-xl border border-white/5">Setiap transaksi penyewaan maupun meminjam barang secara otomatis memberikan Cashback koin yang bisa digunakan untuk menukar voucher atau potongan harga.</p>
+                        <p
+                            class="text-xs text-gray-400 leading-relaxed text-center bg-white/5 p-4 rounded-xl border border-white/5">
+                            Setiap transaksi penyewaan maupun meminjam barang secara otomatis memberikan Cashback koin
+                            yang bisa digunakan untuk menukar voucher atau potongan harga.</p>
                     </div>
                 </div>
 
                 <!-- TAB 5: REWARD -->
                 <div id="tab-content-reward" class="tab-pane hidden animate-fade-in w-full">
-                    
+
                     <!-- Reward Aktif -->
                     <div class="mb-6" id="active-rewards-section">
                         <h2 class="text-lg font-bold text-white mb-4">Voucher Aktif Anda</h2>
@@ -333,51 +427,87 @@
                         <h2 class="text-lg font-bold text-white mb-4">Katalog Reward</h2>
                         <div class="grid grid-cols-1 gap-4">
                             <!-- Potongan Harga -->
-                            <div class="p-4 border border-yellow-500/20 bg-gradient-to-br from-yellow-500/10 to-[#030712] rounded-2xl flex items-center justify-between group">
+                            <div
+                                class="p-4 border border-yellow-500/20 bg-gradient-to-br from-yellow-500/10 to-[#030712] rounded-2xl flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500"><i class="ph-fill ph-percent text-lg"></i></div>
+                                    <div
+                                        class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500">
+                                        <i class="ph-fill ph-percent text-lg"></i>
+                                    </div>
                                     <div>
-                                        <h4 class="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors">Potongan Harga</h4>
+                                        <h4
+                                            class="text-sm font-bold text-white group-hover:text-yellow-400 transition-colors">
+                                            Potongan Harga</h4>
                                         <p class="text-[10px] text-gray-400 mt-0.5">Diskon sewa barang/properti</p>
                                     </div>
                                 </div>
-                                <button class="bg-yellow-500/20 text-yellow-500 text-[10px] font-bold px-2 py-1.5 rounded-lg border border-yellow-500/30 hover:bg-yellow-500/30 transition-colors btn-tukar-reward" data-cost="1500" data-reward="Potongan Harga" data-icon="ph-percent" data-color="yellow">1.5K Coins</button>
+                                <button
+                                    class="bg-yellow-500/20 text-yellow-500 text-[10px] font-bold px-2 py-1.5 rounded-lg border border-yellow-500/30 hover:bg-yellow-500/30 transition-colors btn-tukar-reward"
+                                    data-cost="1500" data-reward="Potongan Harga" data-icon="ph-percent"
+                                    data-color="yellow">1.5K Coins</button>
                             </div>
 
                             <!-- Promosi Produk -->
-                            <div class="p-4 border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-[#030712] rounded-2xl flex items-center justify-between group">
+                            <div
+                                class="p-4 border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-[#030712] rounded-2xl flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-500"><i class="ph-fill ph-megaphone text-lg"></i></div>
+                                    <div
+                                        class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-500">
+                                        <i class="ph-fill ph-megaphone text-lg"></i>
+                                    </div>
                                     <div>
-                                        <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">Promosi Produk</h4>
+                                        <h4
+                                            class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors">
+                                            Promosi Produk</h4>
                                         <p class="text-[10px] text-gray-400 mt-0.5">Iklan produk di beranda</p>
                                     </div>
                                 </div>
-                                <button class="bg-purple-500/20 text-purple-500 text-[10px] font-bold px-2 py-1.5 rounded-lg border border-purple-500/30 hover:bg-purple-500/30 transition-colors btn-tukar-reward" data-cost="3000" data-reward="Promosi Produk" data-icon="ph-megaphone" data-color="purple">3K Coins</button>
+                                <button
+                                    class="bg-purple-500/20 text-purple-500 text-[10px] font-bold px-2 py-1.5 rounded-lg border border-purple-500/30 hover:bg-purple-500/30 transition-colors btn-tukar-reward"
+                                    data-cost="3000" data-reward="Promosi Produk" data-icon="ph-megaphone"
+                                    data-color="purple">3K Coins</button>
                             </div>
 
                             <!-- Tagihan Listrik & Air -->
-                            <div class="p-4 border border-cyan/20 bg-gradient-to-br from-cyan/10 to-[#030712] rounded-2xl flex items-center justify-between group">
+                            <div
+                                class="p-4 border border-cyan/20 bg-gradient-to-br from-cyan/10 to-[#030712] rounded-2xl flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-cyan/20 rounded-full flex items-center justify-center text-cyan"><i class="ph-fill ph-lightning text-lg"></i></div>
+                                    <div
+                                        class="w-10 h-10 bg-cyan/20 rounded-full flex items-center justify-center text-cyan">
+                                        <i class="ph-fill ph-lightning text-lg"></i>
+                                    </div>
                                     <div>
-                                        <h4 class="text-sm font-bold text-white group-hover:text-cyan transition-colors">Token Listrik & Air</h4>
+                                        <h4
+                                            class="text-sm font-bold text-white group-hover:text-cyan transition-colors">
+                                            Token Listrik & Air</h4>
                                         <p class="text-[10px] text-gray-400 mt-0.5">Voucher PLN & PDAM</p>
                                     </div>
                                 </div>
-                                <button class="bg-cyan/20 text-cyan text-[10px] font-bold px-2 py-1.5 rounded-lg border border-cyan/30 hover:bg-cyan/30 transition-colors btn-tukar-reward" data-cost="5000" data-reward="Token Listrik & Air" data-icon="ph-lightning" data-color="cyan">5K Coins</button>
+                                <button
+                                    class="bg-cyan/20 text-cyan text-[10px] font-bold px-2 py-1.5 rounded-lg border border-cyan/30 hover:bg-cyan/30 transition-colors btn-tukar-reward"
+                                    data-cost="5000" data-reward="Token Listrik & Air" data-icon="ph-lightning"
+                                    data-color="cyan">5K Coins</button>
                             </div>
 
                             <!-- Subsidi Legalitas Usaha -->
-                            <div class="p-4 border border-emerald/20 bg-gradient-to-br from-emerald/10 to-[#030712] rounded-2xl flex items-center justify-between group">
+                            <div
+                                class="p-4 border border-emerald/20 bg-gradient-to-br from-emerald/10 to-[#030712] rounded-2xl flex items-center justify-between group">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 bg-emerald/20 rounded-full flex items-center justify-center text-emerald"><i class="ph-fill ph-file-text text-lg"></i></div>
+                                    <div
+                                        class="w-10 h-10 bg-emerald/20 rounded-full flex items-center justify-center text-emerald">
+                                        <i class="ph-fill ph-file-text text-lg"></i>
+                                    </div>
                                     <div>
-                                        <h4 class="text-sm font-bold text-white group-hover:text-emerald transition-colors">Subsidi Legalitas</h4>
+                                        <h4
+                                            class="text-sm font-bold text-white group-hover:text-emerald transition-colors">
+                                            Subsidi Legalitas</h4>
                                         <p class="text-[10px] text-gray-400 mt-0.5">Bantuan pembuatan izin UMKM</p>
                                     </div>
                                 </div>
-                                <button class="bg-emerald/20 text-emerald text-[10px] font-bold px-2 py-1.5 rounded-lg border border-emerald/30 hover:bg-emerald/30 transition-colors btn-tukar-reward" data-cost="10000" data-reward="Subsidi Legalitas" data-icon="ph-file-text" data-color="emerald">10K Coins</button>
+                                <button
+                                    class="bg-emerald/20 text-emerald text-[10px] font-bold px-2 py-1.5 rounded-lg border border-emerald/30 hover:bg-emerald/30 transition-colors btn-tukar-reward"
+                                    data-cost="10000" data-reward="Subsidi Legalitas" data-icon="ph-file-text"
+                                    data-color="emerald">10K Coins</button>
                             </div>
                         </div>
                     </div>
@@ -388,26 +518,33 @@
                     <div>
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-lg font-bold text-white">Notifikasi</h2>
-                            <button id="btn-read-all" class="text-[10px] text-emerald hover:text-white transition-colors">Tandai sudah dibaca</button>
+                            <button id="btn-read-all"
+                                class="text-[10px] text-emerald hover:text-white transition-colors">Tandai sudah
+                                dibaca</button>
                         </div>
                         <div class="space-y-3" id="notif-list">
                             <!-- JS merender notifikasi -->
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
         <!-- ==============================================
              MODAL DAFTAR ULASAN
              ============================================== -->
-        <div id="modal-reviews" class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0" id="modal-reviews-backdrop" onclick="closeReviewsModal()"></div>
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" id="modal-reviews-panel">
+        <div id="modal-reviews"
+            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
+            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+                id="modal-reviews-backdrop" onclick="closeReviewsModal()"></div>
+            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+                id="modal-reviews-panel">
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
-                <button onclick="closeReviewsModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i class="ph-bold ph-x text-sm"></i></button>
-                
+                <button onclick="closeReviewsModal()"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i
+                        class="ph-bold ph-x text-sm"></i></button>
+
                 <div class="px-5 pb-4 pt-2 border-b border-white/10">
                     <h2 class="text-lg font-bold text-white mb-1">Penilaian Produk</h2>
                     <div class="flex items-center gap-2" id="modal-reviews-summary">
@@ -424,70 +561,95 @@
         <!-- ==============================================
              MODAL PEMINJAMAN (Bottom Sheet / Full width inside phone-frame)
              ============================================== -->
-        <div id="modal-pinjam" class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
-            
+        <div id="modal-pinjam"
+            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
+
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0" id="modal-backdrop"></div>
-            
+            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+                id="modal-backdrop"></div>
+
             <!-- Panel Content -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" id="modal-panel">
-                
+            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+                id="modal-panel">
+
                 <!-- Pill marker for swipe -->
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
-                
-                <button id="modal-close-icon" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i class="ph-bold ph-x text-sm"></i></button>
-                
+
+                <button id="modal-close-icon"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i
+                        class="ph-bold ph-x text-sm"></i></button>
+
                 <div class="flex-grow overflow-y-auto px-5 pb-6 pt-2 scrollbar-hide">
-                    
-                    <div class="modal-cover h-64 bg-gray-900 rounded-2xl relative overflow-hidden mb-4 border border-white/5 flex items-center justify-center">
+
+                    <div
+                        class="modal-cover h-64 bg-gray-900 rounded-2xl relative overflow-hidden mb-4 border border-white/5 flex items-center justify-center">
                         <div id="modal-cover" class="w-full h-full"></div>
                         <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-[#080d16] to-transparent opacity-80 h-1/2 mt-auto"></div>
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-[#080d16] to-transparent opacity-80 h-1/2 mt-auto">
+                        </div>
                     </div>
 
                     <h2 id="modal-title" class="text-xl font-bold text-white leading-tight mb-2">Nama Barang</h2>
                     <div class="flex items-center gap-2 mb-5 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
                         <i class="ph-fill ph-map-pin text-gray-400 text-sm"></i>
-                        <a id="modal-location-link" href="#" target="_blank" class="text-[11px] text-cyan hover:underline font-medium break-words truncate flex-grow">Lokasi...</a>
+                        <a id="modal-location-link" href="#" target="_blank"
+                            class="text-[11px] text-cyan hover:underline font-medium break-words truncate flex-grow">Lokasi...</a>
                     </div>
 
                     <div class="space-y-4">
                         <div class="bg-[#030712] border border-white/5 rounded-xl p-4">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">Durasi Sewa (Hari)</label>
-                            <div class="flex items-center justify-between gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
-                                <input type="number" id="modal-duration" value="1" min="1" class="w-16 bg-[#080d16] border border-white/10 rounded-lg text-center text-white py-1.5 text-base font-bold focus:outline-none focus:border-emerald/50">
-                                <p class="text-[11px] text-gray-400 font-medium">x Rp <span id="modal-rate" class="font-bold text-white">0</span> / hari</p>
+                            <label
+                                class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">Durasi
+                                Sewa (Hari)</label>
+                            <div
+                                class="flex items-center justify-between gap-3 bg-white/5 p-2 rounded-lg border border-white/5">
+                                <input type="number" id="modal-duration" value="1" min="1"
+                                    class="w-16 bg-[#080d16] border border-white/10 rounded-lg text-center text-white py-1.5 text-base font-bold focus:outline-none focus:border-emerald/50">
+                                <p class="text-[11px] text-gray-400 font-medium">x Rp <span id="modal-rate"
+                                        class="font-bold text-white">0</span> / hari</p>
                             </div>
                         </div>
 
                         <div class="bg-[#030712] border border-white/5 rounded-xl p-4">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">Pembayaran</label>
-                            <label class="flex items-center gap-3 p-2.5 border border-emerald/40 bg-emerald/10 rounded-xl cursor-pointer">
-                                <input type="radio" name="payment-method" value="qris" class="text-emerald focus:ring-emerald accent-emerald w-4 h-4" checked>
+                            <label
+                                class="block text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-widest">Pembayaran</label>
+                            <label
+                                class="flex items-center gap-3 p-2.5 border border-emerald/40 bg-emerald/10 rounded-xl cursor-pointer">
+                                <input type="radio" name="payment-method" value="qris"
+                                    class="text-emerald focus:ring-emerald accent-emerald w-4 h-4" checked>
                                 <div class="flex-grow">
-                                    <p class="text-xs font-bold text-white flex items-center gap-2"><i class="ph-fill ph-qr-code text-emerald text-base"></i> QRIS / Transfer Bank</p>
+                                    <p class="text-xs font-bold text-white flex items-center gap-2"><i
+                                            class="ph-fill ph-qr-code text-emerald text-base"></i> QRIS / Transfer Bank
+                                    </p>
                                 </div>
                             </label>
                         </div>
-                        
+
                         <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 flex gap-3 items-start">
                             <div class="bg-yellow-500/20 p-1.5 rounded-lg">
                                 <i class="ph-fill ph-coin text-yellow-500 text-xl animate-pulse"></i>
                             </div>
                             <div>
                                 <h4 class="text-xs font-bold text-yellow-500 mb-0.5">Bonus Cashback</h4>
-                                <p class="text-[10px] text-amber-500/80 leading-relaxed">Dapatkan <span id="modal-cashback" class="font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 rounded shadow-sm inline-block border border-orange-400/50">0 Coins</span></p>
+                                <p class="text-[10px] text-amber-500/80 leading-relaxed">Dapatkan <span
+                                        id="modal-cashback"
+                                        class="font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 rounded shadow-sm inline-block border border-orange-400/50">0
+                                        Coins</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-5 border-t border-white/10 bg-[#080d16] flex flex-row items-center justify-between gap-4 sticky bottom-0">
+                <div
+                    class="p-5 border-t border-white/10 bg-[#080d16] flex flex-row items-center justify-between gap-4 sticky bottom-0">
                     <div>
                         <p class="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-0.5">Total Bayar</p>
-                        <p class="text-xl font-bold text-emerald"><span class="text-[10px] text-emerald/70 mr-1">Rp</span><span id="modal-total">0</span></p>
+                        <p class="text-xl font-bold text-emerald"><span
+                                class="text-[10px] text-emerald/70 mr-1">Rp</span><span id="modal-total">0</span></p>
                     </div>
-                    <button id="modal-btn-confirm" class="px-6 bg-emerald text-darkBg font-bold py-3 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] text-[11px] uppercase tracking-wide">
+                    <button id="modal-btn-confirm"
+                        class="px-6 bg-emerald text-darkBg font-bold py-3 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] text-[11px] uppercase tracking-wide">
                         Sewa
                     </button>
                 </div>
@@ -496,34 +658,47 @@
         <!-- ==============================================
              MODAL REVIEW (Bottom Sheet)
              ============================================== -->
-        <div id="modal-review" class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
-            
+        <div id="modal-review"
+            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
+
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0" id="modal-review-backdrop"></div>
-            
+            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+                id="modal-review-backdrop"></div>
+
             <!-- Panel Content -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" id="modal-review-panel">
-                
+            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[90vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+                id="modal-review-panel">
+
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
-                <button id="modal-review-close" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i class="ph-bold ph-x text-sm"></i></button>
-                
+                <button id="modal-review-close"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i
+                        class="ph-bold ph-x text-sm"></i></button>
+
                 <div class="flex-grow px-5 pb-6 pt-2">
                     <h2 class="text-xl font-bold text-white leading-tight mb-1 text-center">Beri Ulasan</h2>
-                    <p class="text-[11px] text-gray-400 text-center mb-6">Bagaimana pengalaman Anda meminjam barang ini?</p>
+                    <p class="text-[11px] text-gray-400 text-center mb-6">Bagaimana pengalaman Anda meminjam barang ini?
+                    </p>
 
                     <div class="flex justify-center gap-3 mb-6" id="star-container">
-                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating" data-val="1"></i>
-                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating" data-val="2"></i>
-                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating" data-val="3"></i>
-                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating" data-val="4"></i>
-                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating" data-val="5"></i>
+                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating"
+                            data-val="1"></i>
+                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating"
+                            data-val="2"></i>
+                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating"
+                            data-val="3"></i>
+                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating"
+                            data-val="4"></i>
+                        <i class="ph-fill ph-star text-4xl text-gray-700 cursor-pointer hover:scale-110 transition-transform star-rating"
+                            data-val="5"></i>
                     </div>
 
                     <div class="bg-[#030712] border border-white/5 rounded-xl p-3 mb-6">
-                        <textarea id="review-text" rows="3" placeholder="Ceritakan pengalaman Anda... (Opsional)" class="w-full bg-transparent text-white text-sm focus:outline-none resize-none"></textarea>
+                        <textarea id="review-text" rows="3" placeholder="Ceritakan pengalaman Anda... (Opsional)"
+                            class="w-full bg-transparent text-white text-sm focus:outline-none resize-none"></textarea>
                     </div>
 
-                    <button id="btn-submit-review" class="w-full bg-yellow-500 text-darkBg font-bold py-3.5 rounded-xl hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.2)] text-[12px] uppercase tracking-wide">
+                    <button id="btn-submit-review"
+                        class="w-full bg-yellow-500 text-darkBg font-bold py-3.5 rounded-xl hover:bg-yellow-400 transition-all shadow-[0_0_20px_rgba(234,179,8,0.2)] text-[12px] uppercase tracking-wide">
                         Kirim Ulasan
                     </button>
                 </div>
@@ -533,22 +708,29 @@
         <!-- ==============================================
              MODAL PILIH ASET PROMOSI (Bottom Sheet)
              ============================================== -->
-        <div id="modal-promosi" class="absolute inset-0 z-[110] hidden flex-col justify-end pointer-events-none overflow-hidden">
+        <div id="modal-promosi"
+            class="absolute inset-0 z-[110] hidden flex-col justify-end pointer-events-none overflow-hidden">
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0" id="modal-promosi-backdrop"></div>
+            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+                id="modal-promosi-backdrop"></div>
             <!-- Panel -->
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[85vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]" id="modal-promosi-panel">
+            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full max-h-[85vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+                id="modal-promosi-panel">
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
-                <button id="modal-promosi-close" class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i class="ph-bold ph-x text-sm"></i></button>
+                <button id="modal-promosi-close"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i
+                        class="ph-bold ph-x text-sm"></i></button>
 
                 <div class="px-5 pb-6 pt-2 flex flex-col overflow-y-auto">
                     <div class="flex items-center gap-3 mb-1">
-                        <div class="w-9 h-9 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-500">
+                        <div
+                            class="w-9 h-9 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-500">
                             <i class="ph-fill ph-megaphone text-lg"></i>
                         </div>
                         <div>
                             <h2 class="text-lg font-bold text-white">Promosikan Aset</h2>
-                            <p class="text-[11px] text-gray-400">Pilih aset Anda yang ingin tampil di bagian Rekomendasi</p>
+                            <p class="text-[11px] text-gray-400">Pilih aset Anda yang ingin tampil di bagian Rekomendasi
+                            </p>
                         </div>
                     </div>
 
@@ -565,12 +747,13 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
     <!-- Script External -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
     <!-- Path File JS -->
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
