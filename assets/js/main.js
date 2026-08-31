@@ -285,6 +285,7 @@ document.addEventListener('DOMContentLoaded', function () {
     async function updateCoinsUI() {
         if (!currentUser || !supabase) return;
         const navName    = document.getElementById('nav-name');
+        const navAvatar  = document.getElementById('nav-avatar');
         const navBalance = document.getElementById('nav-balance');
         const tabBalance = document.getElementById('tab-balance');
 
@@ -302,7 +303,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const coins = (!error && profile && typeof profile.eco_points === 'number') ? profile.eco_points : 0;
 
             if (navName) {
-                navName.innerHTML = `<span class="font-medium text-gray-300">${displayName}</span>`;
+                navName.innerText = displayName;
+            }
+            if (navAvatar) {
+                const initial = (displayName || 'U')[0].toUpperCase();
+                navAvatar.innerText = initial;
             }
             if (navBalance) navBalance.innerText = coins.toLocaleString('id-ID');
             if (tabBalance) tabBalance.innerText = coins.toLocaleString('id-ID');
@@ -310,7 +315,10 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('PROFILE FETCH ERROR:', err);
             const fallbackName = currentUser.user_metadata?.nama || currentUser.email?.split('@')[0] || 'Pengguna';
             if (navName) {
-                navName.innerHTML = `<span class="font-medium text-gray-300">${fallbackName}</span>`;
+                navName.innerText = fallbackName;
+            }
+            if (navAvatar) {
+                navAvatar.innerText = (fallbackName || 'U')[0].toUpperCase();
             }
         }
     }
@@ -708,17 +716,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 catalogGrid.insertAdjacentHTML("beforeend", catalogHtml);
             }
 
-            // Tampilkan atau sembunyikan container rekomendasi di bagian atas katalog
-            if (containerRekomendasi) {
-                if (hasPromoted && rekomendasiGrid && rekomendasiGrid.children.length > 0) {
-                    containerRekomendasi.classList.remove("hidden");
+            // Tampilkan section rekomendasi secara permanen dengan slider aktif atau empty state
+            if (containerRekomendasi && rekomendasiGrid) {
+                containerRekomendasi.classList.remove("hidden");
+
+                if (hasPromoted && rekomendasiGrid.children.length > 0) {
                     initRekomendasiAutoScroll();
                 } else {
-                    containerRekomendasi.classList.add("hidden");
                     if (_rekomendasiAutoScrollTimer) {
                         clearInterval(_rekomendasiAutoScrollTimer);
                         _rekomendasiAutoScrollTimer = null;
                     }
+                    rekomendasiGrid.innerHTML = `
+                    <div class="w-full py-5 px-4 rounded-2xl bg-gradient-to-r from-yellow-500/5 via-amber-500/5 to-transparent border border-yellow-500/15 flex items-center justify-between gap-3 text-left">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-500 flex-shrink-0">
+                                <i class="ph-fill ph-sparkle text-xl animate-pulse"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-gray-200">Belum ada produk yang direkomendasikan saat ini</p>
+                                <p class="text-[10px] text-gray-400 mt-0.5">Promosikan aset Anda melalui menu Reward agar tampil di banner utama!</p>
+                            </div>
+                        </div>
+                        <button onclick="document.querySelector('.app-menu-btn[data-target=\\'tab-content-reward\\']')?.click()" class="hidden sm:flex items-center gap-1.5 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-3 py-1.5 rounded-xl text-[11px] font-bold transition-all flex-shrink-0 cursor-pointer active:scale-95">
+                            <i class="ph-bold ph-ticket text-xs"></i> Buka Reward
+                        </button>
+                    </div>`;
                 }
             }
         } catch (err) {
@@ -1544,16 +1567,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function promoteAsset(assetId, assetTitle) {
         try {
-            // Update langsung ke Supabase (sinkron lintas device)
+            // 1. Update status promosi langsung ke Supabase (sinkronisasi lintas device)
             if (supabase) {
                 const { error } = await supabase
                     .from('assets')
                     .update({ is_promoted: true })
                     .eq('id', assetId);
 
-                if (error) console.error("Update asset promote error:", error);
+                if (error) {
+                    console.error("Gagal update promosi ke database Supabase:", error);
+                    throw new Error(error.message || "Gagal mengupdate database Supabase");
+                }
             }
 
+            // 2. Simpan ke localStorage sebagai cadangan offline
             let promotedIds = safeGetStorageJSON('ecopay_promoted_ids', []);
             if (!Array.isArray(promotedIds)) promotedIds = [];
             if (!promotedIds.includes(String(assetId))) {
@@ -1567,6 +1594,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 safeSetStorageJSON('ecopay_all_assets', allAssets);
             }
 
+            // 3. Konsumsi voucher promosi yang aktif
             if (activeRewardIdForPromosi) {
                 const userKey = getCurrentUserKey();
                 let allRewards = safeGetStorageJSON('ecopay_active_rewards', {});
