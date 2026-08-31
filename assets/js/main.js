@@ -54,12 +54,9 @@ window.logout = async function () {
         console.warn('Supabase signOut notice:', err);
     } finally {
         currentUser = null;
-        const savedPromoted = localStorage.getItem('ecopay_promoted_ids');
-        const savedAllAssets = localStorage.getItem('ecopay_all_assets');
+        try { localStorage.removeItem('ecopay_promoted_ids'); } catch (e) {}
         try { localStorage.clear(); } catch (e) {}
         try { sessionStorage.clear(); } catch (e) {}
-        if (savedPromoted) localStorage.setItem('ecopay_promoted_ids', savedPromoted);
-        if (savedAllAssets) localStorage.setItem('ecopay_all_assets', savedAllAssets);
 
         const loginForm = document.getElementById('login-form');
         if (loginForm) loginForm.reset();
@@ -100,6 +97,8 @@ function showLoginScreen() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Bersihkan cache promosi lokal lama agar Supabase menjadi Single Source of Truth
+    try { localStorage.removeItem('ecopay_promoted_ids'); } catch (e) {}
 
     // ==========================================
     // 1. CEK SESSION AKTIF SAAT HALAMAN DIMUAT
@@ -668,17 +667,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!Array.isArray(allAssets)) allAssets = [];
 
-            // 1. Ambil daftar ID promosi lokal dari localStorage (parse sebagai array string)
-            let promotedIds = [];
-            try {
-                const parsed = JSON.parse(localStorage.getItem('ecopay_promoted_ids') || '[]');
-                if (Array.isArray(parsed)) {
-                    promotedIds = parsed.map(id => String(id));
-                }
-            } catch (e) {
-                promotedIds = [];
-            }
-
             const containerRekomendasi = document.getElementById("container-rekomendasi");
             const rekomendasiGrid = document.getElementById("rekomendasi-grid");
 
@@ -691,18 +679,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const asset = allAssets[i];
                 if (!asset) continue;
 
-                // 1. Periksa kolom asset.is_promoted dari database
-                let isPromoted = asset.is_promoted === true || asset.is_promoted === 'true';
-
-                // 2. Jika false/null/undefined, lakukan pengecekan tambahan ke array localStorage
-                if (!isPromoted && promotedIds.includes(String(asset.id))) {
-                    isPromoted = true;
-                }
-
-                // 3. Set enrichedAsset.is_promoted = true secara otomatis sebelum dirender
+                // 1. Status promosi HANYA ditentukan oleh nilai kolom is_promoted dari database Supabase (Single Source of Truth)
+                const isPromoted = asset.is_promoted === true || asset.is_promoted === 'true';
                 const enrichedAsset = { ...asset, is_promoted: isPromoted };
 
-                // 4. Render ke #rekomendasi-grid jika berstatus promosi sebagai item slider
+                // 2. Render ke #rekomendasi-grid jika berstatus promosi sebagai item slider
                 if (enrichedAsset.is_promoted) {
                     hasPromoted = true;
                     if (rekomendasiGrid) {
@@ -711,7 +692,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
 
-                // Render SELURUH daftar aset ke katalog utama (#catalog-grid)
+                // 3. Render SELURUH daftar aset ke katalog utama (#catalog-grid)
                 const catalogHtml = createAssetCardHTML(enrichedAsset, false);
                 catalogGrid.insertAdjacentHTML("beforeend", catalogHtml);
             }
@@ -1567,7 +1548,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function promoteAsset(assetId, assetTitle) {
         try {
-            // 1. Update status promosi langsung ke Supabase (sinkronisasi lintas device)
+            // 1. Update status promosi langsung ke Supabase sebagai Single Source of Truth
             if (supabase) {
                 const { error } = await supabase
                     .from('assets')
@@ -1578,23 +1559,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error("Gagal update promosi ke database Supabase:", error);
                     throw new Error(error.message || "Gagal mengupdate database Supabase");
                 }
+            } else {
+                throw new Error("Koneksi database Supabase tidak tersedia.");
             }
 
-            // 2. Simpan ke localStorage sebagai cadangan offline
-            let promotedIds = safeGetStorageJSON('ecopay_promoted_ids', []);
-            if (!Array.isArray(promotedIds)) promotedIds = [];
-            if (!promotedIds.includes(String(assetId))) {
-                promotedIds.push(String(assetId));
-                safeSetStorageJSON('ecopay_promoted_ids', promotedIds);
-            }
+            // Bersihkan sisa cache promosi lokal agar tidak menimbulkan perbedaan antar perangkat
+            try { localStorage.removeItem('ecopay_promoted_ids'); } catch (e) {}
 
-            let allAssets = safeGetStorageJSON('ecopay_all_assets', []);
-            if (Array.isArray(allAssets)) {
-                allAssets = allAssets.map(a => String(a.id) === String(assetId) ? { ...a, is_promoted: true } : a);
-                safeSetStorageJSON('ecopay_all_assets', allAssets);
-            }
-
-            // 3. Konsumsi voucher promosi yang aktif
+            // 2. Konsumsi voucher promosi yang aktif
             if (activeRewardIdForPromosi) {
                 const userKey = getCurrentUserKey();
                 let allRewards = safeGetStorageJSON('ecopay_active_rewards', {});
@@ -1606,6 +1578,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             closePromosiModal();
             loadActiveRewards();
+            
+            // 3. Ambil data terbaru langsung dari Supabase & render ulang UI
             await loadAllAssets();
 
             // Pemicu event storage untuk sinkronisasi instan multi-tab
