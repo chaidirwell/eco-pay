@@ -474,9 +474,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // ==========================================
     const catalogGrid = document.getElementById("catalog-grid");
 
-    function createAssetCardHTML(asset) {
+    function createAssetCardHTML(asset, isSlider = false) {
         const isOwner = (currentUser && (asset.owner_id === currentUser.id || String(asset.owner_id) === String(currentUser.id))) || asset.owner === currentUser;
         const isRented = asset.is_available === false || asset.is_available === 'false' || asset.status === 'rented' || asset.status === 'dipinjam';
+        const sliderClass = isSlider ? 'w-[230px] min-w-[230px] sm:w-[260px] sm:min-w-[260px] flex-shrink-0' : '';
 
         let mediaHTML = asset.image_url
             ? `<img src="${asset.image_url}" alt="${asset.title}" class="w-full h-full object-cover">`
@@ -550,7 +551,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         return `
-        <div class="glass-card rounded-2xl overflow-hidden border border-white/5 flex flex-col asset-card bg-gray-900/40 relative" data-title="${(asset.title || "").toLowerCase()}">
+        <div class="glass-card rounded-2xl overflow-hidden border border-white/5 flex flex-col asset-card bg-gray-900/40 relative ${sliderClass}" data-title="${(asset.title || "").toLowerCase()}">
             <div class="relative h-32 bg-gray-800 flex items-center justify-center overflow-hidden">
                 ${mediaHTML}
                 ${rentedOverlayHTML}
@@ -577,6 +578,43 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
             </div>
         </div>`;
+    }
+
+    let _rekomendasiAutoScrollTimer = null;
+
+    function initRekomendasiAutoScroll() {
+        const grid = document.getElementById("rekomendasi-grid");
+        if (!grid) return;
+
+        if (_rekomendasiAutoScrollTimer) {
+            clearInterval(_rekomendasiAutoScrollTimer);
+            _rekomendasiAutoScrollTimer = null;
+        }
+
+        const cards = grid.querySelectorAll(".asset-card");
+        // Aktifkan auto-scroll slider hanya jika item rekomendasi lebih dari 2
+        if (cards.length <= 2) return;
+
+        let isPaused = false;
+        grid.onmouseenter = () => { isPaused = true; };
+        grid.onmouseleave = () => { isPaused = false; };
+        grid.ontouchstart = () => { isPaused = true; };
+        grid.ontouchend = () => { setTimeout(() => { isPaused = false; }, 2000); };
+
+        _rekomendasiAutoScrollTimer = setInterval(() => {
+            if (isPaused) return;
+
+            const firstCard = grid.querySelector(".asset-card");
+            const stepWidth = firstCard ? (firstCard.offsetWidth + 16) : 260; // Lebar kartu + gap-4
+
+            const maxScroll = grid.scrollWidth - grid.clientWidth;
+            if (grid.scrollLeft >= maxScroll - 15) {
+                // Berputar kembali ke awal secara mulus
+                grid.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                grid.scrollBy({ left: stepWidth, behavior: 'smooth' });
+            }
+        }, 3200);
     }
 
     async function loadAllAssets() {
@@ -655,26 +693,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 // 3. Set enrichedAsset.is_promoted = true secara otomatis sebelum dirender
                 const enrichedAsset = { ...asset, is_promoted: isPromoted };
-                const html = createAssetCardHTML(enrichedAsset);
 
-                // 4. Render ke #rekomendasi-grid jika berstatus promosi
+                // 4. Render ke #rekomendasi-grid jika berstatus promosi sebagai item slider
                 if (enrichedAsset.is_promoted) {
                     hasPromoted = true;
                     if (rekomendasiGrid) {
-                        rekomendasiGrid.insertAdjacentHTML("beforeend", html);
+                        const sliderHtml = createAssetCardHTML(enrichedAsset, true);
+                        rekomendasiGrid.insertAdjacentHTML("beforeend", sliderHtml);
                     }
                 }
 
                 // Render SELURUH daftar aset ke katalog utama (#catalog-grid)
-                catalogGrid.insertAdjacentHTML("beforeend", html);
+                const catalogHtml = createAssetCardHTML(enrichedAsset, false);
+                catalogGrid.insertAdjacentHTML("beforeend", catalogHtml);
             }
 
             // Tampilkan atau sembunyikan container rekomendasi di bagian atas katalog
             if (containerRekomendasi) {
                 if (hasPromoted && rekomendasiGrid && rekomendasiGrid.children.length > 0) {
                     containerRekomendasi.classList.remove("hidden");
+                    initRekomendasiAutoScroll();
                 } else {
                     containerRekomendasi.classList.add("hidden");
+                    if (_rekomendasiAutoScrollTimer) {
+                        clearInterval(_rekomendasiAutoScrollTimer);
+                        _rekomendasiAutoScrollTimer = null;
+                    }
                 }
             }
         } catch (err) {

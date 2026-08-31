@@ -98,3 +98,12 @@ input:-webkit-autofill:active {
   white-space: normal;
   box-sizing: border-box;
 }
+
+/* Horizontal Scrollbar Hide */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

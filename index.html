@@ -230,12 +230,15 @@
 
                     <!-- REKOMENDASI -->
                     <div id="container-rekomendasi" class="mb-8 hidden">
-                        <h2
-                            class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 mb-3 flex items-center gap-2">
-                            <i class="ph-fill ph-star text-yellow-500"></i> Produk Direkomendasikan
-                        </h2>
+                        <div class="flex items-center justify-between mb-3">
+                            <h2
+                                class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500 flex items-center gap-2">
+                                <i class="ph-fill ph-star text-yellow-500 animate-pulse"></i> Produk Direkomendasikan
+                            </h2>
+                            <span class="text-[10px] text-yellow-500/80 bg-yellow-500/10 border border-yellow-500/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">Featured</span>
+                        </div>
                         <div id="rekomendasi-grid"
-                            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
+                            class="flex flex-nowrap overflow-x-auto gap-4 pb-3 pt-1 scrollbar-none scroll-smooth">
                             <!-- JS merender rekomendasi -->
                         </div>
                     </div>
