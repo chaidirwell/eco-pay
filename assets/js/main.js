@@ -1550,15 +1550,22 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             // 1. Update status promosi langsung ke Supabase sebagai Single Source of Truth
             if (supabase) {
-                const { error } = await supabase
+                console.log("[Promosi] Mengirim query update ke Supabase untuk assetId:", assetId);
+                const { data, error } = await supabase
                     .from('assets')
                     .update({ is_promoted: true })
-                    .eq('id', assetId);
+                    .eq('id', assetId)
+                    .select();
 
                 if (error) {
                     console.error("Gagal update promosi ke database Supabase:", error);
-                    throw new Error(error.message || "Gagal mengupdate database Supabase");
+                    let errorMsg = error.message || "Terjadi kesalahan saat mengupdate Supabase.";
+                    if (error.code === '42501' || errorMsg.toLowerCase().includes('row-level security') || errorMsg.toLowerCase().includes('policy')) {
+                        errorMsg = "Gagal karena Row Level Security (RLS) Supabase membatasi hak akses UPDATE. Pastikan policy UPDATE pada tabel 'assets' diizinkan di dashboard Supabase.";
+                    }
+                    throw new Error(errorMsg);
                 }
+                console.log("[Promosi] Berhasil diupdate di database Supabase:", data);
             } else {
                 throw new Error("Koneksi database Supabase tidak tersedia.");
             }
@@ -1579,7 +1586,7 @@ document.addEventListener('DOMContentLoaded', function () {
             closePromosiModal();
             loadActiveRewards();
             
-            // 3. Ambil data terbaru langsung dari Supabase & render ulang UI
+            // 3. Ambil data terbaru langsung dari Supabase & render ulang UI di semua perangkat
             await loadAllAssets();
 
             // Pemicu event storage untuk sinkronisasi instan multi-tab
@@ -1593,11 +1600,11 @@ document.addEventListener('DOMContentLoaded', function () {
             const cariTabBtn = document.querySelector('.app-menu-btn[data-target="tab-content-cari"]');
             if (cariTabBtn) cariTabBtn.click();
 
-            showToast(`"${assetTitle}" kini tampil di Rekomendasi di seluruh perangkat!`);
+            showToast(`"${assetTitle}" berhasil dipromosikan dan aktif di Rekomendasi!`);
             addNotification('Promosi Aktif', `Aset "${assetTitle}" berhasil dipromosikan dan kini tampil di bagian Produk Direkomendasikan di semua perangkat.`, 'success');
         } catch (err) {
             console.error("Promote asset error:", err);
-            alert("Gagal mempromosikan aset: " + (err.message || err));
+            alert("⚠️ " + (err.message || err));
         }
     }
 
