@@ -476,18 +476,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function createAssetCardHTML(asset) {
         const isOwner = (currentUser && (asset.owner_id === currentUser.id || String(asset.owner_id) === String(currentUser.id))) || asset.owner === currentUser;
+        const isRented = asset.is_available === false || asset.is_available === 'false' || asset.status === 'rented' || asset.status === 'dipinjam';
 
         let mediaHTML = asset.image_url
             ? `<img src="${asset.image_url}" alt="${asset.title}" class="w-full h-full object-cover">`
             : `<i class="ph-fill ${asset.icon || 'ph-package'} text-5xl text-gray-600"></i>`;
 
+        let rentedOverlayHTML = isRented
+            ? `<div class="absolute inset-0 bg-[#080d16]/75 backdrop-blur-[2px] flex items-center justify-center z-10"><span class="bg-red-500/90 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider border border-red-400/40 shadow-lg">Sedang Disewa</span></div>`
+            : '';
+
         let badgeHTML = isOwner
-            ? `<div class="absolute top-2 right-2 bg-emerald/90 text-white text-[9px] font-bold px-2 py-1 rounded border border-emerald/50 uppercase tracking-widest animate-pulse">Aset Anda</div>`
+            ? `<div class="absolute top-2 right-2 bg-emerald/90 text-white text-[9px] font-bold px-2 py-1 rounded border border-emerald/50 uppercase tracking-widest animate-pulse z-20">Aset Anda</div>`
             : '';
 
         let categoryBadge = asset.is_promoted
-            ? `<div class="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-[9px] font-bold px-2 py-1 rounded border border-yellow-300/50 uppercase tracking-widest shadow-lg shadow-yellow-500/20"><i class="ph-fill ph-star text-[8px] mr-0.5"></i> Rekomendasi</div>`
-            : `<div class="absolute top-2 left-2 bg-darkBg/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded border border-white/10 uppercase tracking-widest">${asset.category || 'Umum'}</div>`;
+            ? `<div class="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-[9px] font-bold px-2 py-1 rounded border border-yellow-300/50 uppercase tracking-widest shadow-lg shadow-yellow-500/20 z-20"><i class="ph-fill ph-star text-[8px] mr-0.5"></i> Rekomendasi</div>`
+            : `<div class="absolute top-2 left-2 bg-darkBg/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded border border-white/10 uppercase tracking-widest z-20">${asset.category || 'Umum'}</div>`;
 
         const conditionLabels = { 5: 'Seperti Baru', 4: 'Baik', 3: 'Cukup', 2: 'Kurang', 1: 'Agak Rusak' };
         const conditionColors = { 5: 'text-emerald', 4: 'text-cyan', 3: 'text-yellow-400', 2: 'text-orange-400', 1: 'text-red-400' };
@@ -502,9 +507,20 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>`;
         }
 
-        let actionHTML = isOwner
-            ? `<div class="bg-gray-800 text-gray-400 font-bold text-[10px] px-3 py-1.5 rounded-lg border border-gray-700 text-center w-full">Aset Anda</div>`
-            : `<div class="grid grid-cols-2 gap-1.5 w-full mt-1">
+        let actionHTML;
+        if (isOwner) {
+            actionHTML = `<div class="bg-gray-800 text-gray-400 font-bold text-[10px] px-3 py-1.5 rounded-lg border border-gray-700 text-center w-full">${isRented ? 'Aset Anda (Disewa)' : 'Aset Anda'}</div>`;
+        } else if (isRented) {
+            actionHTML = `<div class="grid grid-cols-2 gap-1.5 w-full mt-1">
+                <button disabled class="bg-gray-800 text-gray-500 border border-gray-700 font-bold text-[10px] py-1.5 rounded-md cursor-not-allowed opacity-75 text-center">
+                    Disewa
+                </button>
+                <button onclick="openReview('${asset.id}')" class="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 hover:bg-yellow-500/20 active:scale-95 font-bold text-[10px] py-1.5 rounded-md transition-all cursor-pointer">
+                    Review
+                </button>
+               </div>`;
+        } else {
+            actionHTML = `<div class="grid grid-cols-2 gap-1.5 w-full mt-1">
                 <button class="btn-pinjam bg-cyan/20 text-cyan border border-cyan/30 hover:bg-cyan/30 active:scale-95 font-bold text-[10px] py-1.5 rounded-md transition-all cursor-pointer" data-id="${asset.id}">
                     Pinjam
                 </button>
@@ -512,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     Review
                 </button>
                </div>`;
+        }
 
         let ratingHTML = '';
         let reviewBadgeHTML = `<div class="flex items-center gap-1.5 mt-2 pt-2 border-t border-white/5 text-xs text-yellow-400 cursor-pointer btn-lihat-ulasan" onclick="openReviewsModal('${asset.id}')">⭐ <span class="font-bold text-white">5.0</span> <span class="text-gray-400 text-[10px]">(Lihat ulasan)</span></div>`;
@@ -519,7 +536,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (asset.reviews && asset.reviews.length > 0) {
             const avgRating = asset.reviews.reduce((acc, r) => acc + (r.rating || 5), 0) / asset.reviews.length;
             ratingHTML = `
-                <div class="absolute bottom-2 left-2 bg-darkBg/90 backdrop-blur-md px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 shadow-lg">
+                <div class="absolute bottom-2 left-2 bg-darkBg/90 backdrop-blur-md px-2 py-1 rounded-full border border-white/10 flex items-center gap-1 shadow-lg z-20">
                     <i class="ph-fill ph-star text-yellow-500 text-[10px]"></i>
                     <span class="text-white text-[9px] font-bold">${avgRating.toFixed(1)}</span>
                     <span class="text-gray-400 text-[8px]">(${asset.reviews.length})</span>
@@ -533,9 +550,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         return `
-        <div class="glass-card rounded-2xl overflow-hidden border border-white/5 flex flex-col asset-card bg-gray-900/40" data-title="${(asset.title || "").toLowerCase()}">
-            <div class="relative h-32 bg-gray-800 flex items-center justify-center">
+        <div class="glass-card rounded-2xl overflow-hidden border border-white/5 flex flex-col asset-card bg-gray-900/40 relative" data-title="${(asset.title || "").toLowerCase()}">
+            <div class="relative h-32 bg-gray-800 flex items-center justify-center overflow-hidden">
                 ${mediaHTML}
+                ${rentedOverlayHTML}
                 ${categoryBadge}
                 ${badgeHTML}
                 ${ratingHTML}
@@ -1044,6 +1062,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     .single();
 
                 if (!trxErr && trx) transactionId = trx.id;
+
+                // Update status ketersediaan aset di database Supabase
+                try {
+                    await supabase
+                        .from("assets")
+                        .update({ is_available: false, status: 'rented' })
+                        .eq("id", currentAssetId);
+                } catch (astErr) {
+                    console.warn("Asset availability update notice:", astErr);
+                }
+            }
+
+            // Update status ketersediaan di cache lokal
+            let allAssets = safeGetStorageJSON('ecopay_all_assets', []);
+            if (Array.isArray(allAssets)) {
+                allAssets = allAssets.map(a => String(a.id) === String(currentAssetId) ? { ...a, is_available: false, status: 'rented' } : a);
+                safeSetStorageJSON('ecopay_all_assets', allAssets);
             }
 
             await updateCoinsUI();
@@ -1054,6 +1089,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!Array.isArray(txs[userKey])) txs[userKey] = [];
             txs[userKey].unshift({
                 id: transactionId,
+                assetId: currentAssetId,
                 itemName: currentItemName,
                 days: duration,
                 totalCost: totalCost,
@@ -1063,16 +1099,7 @@ document.addEventListener('DOMContentLoaded', function () {
             safeSetStorageJSON("ecopay_transactions", txs);
 
             loadTransactions();
-
-            if (currentTargetCard) {
-                currentTargetCard.classList.add("opacity-60");
-                const btn = currentTargetCard.querySelector(".btn-pinjam");
-                if (btn) {
-                    btn.disabled = true;
-                    btn.className = "text-[10px] font-bold px-4 py-2 rounded-lg bg-gray-800 text-gray-500";
-                    btn.innerHTML = "Dipinjam";
-                }
-            }
+            await loadAllAssets();
 
             closeBorrowModal();
             showToast(`Berhasil! Sewa ${currentItemName} aktif & Cashback ${cashback} Coins ditambahkan.`);
@@ -1085,6 +1112,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!Array.isArray(activeRentals)) activeRentals = [];
             activeRentals.push({
                 id: transactionId,
+                assetId: currentAssetId,
                 itemName: currentItemName,
                 durationDays: duration,
                 endTime: rentalEndTime,
@@ -1092,7 +1120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             safeSetStorageJSON('ecopay_active_rentals', activeRentals);
 
-            startRentalCountdown(currentItemName, rentalEndTime, transactionId);
+            startRentalCountdown(currentItemName, rentalEndTime, transactionId, currentAssetId);
 
             addNotification('Sewa Berhasil', `Transaksi sewa "${currentItemName}" selama ${duration} hari berhasil. Selamat menggunakan barang!`, 'success');
 
@@ -1642,12 +1670,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    function showToast(message) {
+    function showToast(message, type = 'success') {
+        // Hapus toast sebelumnya agar tidak menumpuk
+        document.querySelectorAll('.app-toast-notification').forEach(t => t.remove());
+
         const toast = document.createElement('div');
-        toast.className = 'fixed top-10 left-1/2 -translate-x-1/2 z-[1000] bg-emerald/90 text-white px-5 py-2.5 rounded-full font-bold text-xs md:text-sm shadow-2xl animate-fade-in flex items-center gap-2 border border-emerald/50 whitespace-nowrap';
-        toast.innerHTML = `<i class="ph-bold ph-check-circle text-lg"></i> ${message}`;
+        const isError = type === 'error' || type === 'warning' || message.toLowerCase().includes('tidak cukup') || message.toLowerCase().includes('gagal');
+        const bgClass = isError
+            ? 'bg-red-500/95 border-red-400/50 shadow-[0_10px_30px_rgba(239,68,68,0.35)]'
+            : 'bg-emerald/95 border-emerald/50 shadow-[0_10px_30px_rgba(16,185,129,0.35)]';
+        const iconClass = isError
+            ? 'ph-warning-circle text-red-100'
+            : 'ph-check-circle text-emerald-100';
+
+        toast.className = `app-toast-notification fixed top-4 sm:top-5 left-1/2 -translate-x-1/2 z-[9999] max-w-[90vw] w-auto sm:max-w-md ${bgClass} text-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl font-bold text-xs sm:text-sm border backdrop-blur-md animate-fade-in flex items-center gap-2.5 pointer-events-none break-words text-left transition-all duration-300`;
+        toast.innerHTML = `<i class="ph-bold ${iconClass} text-lg sm:text-xl flex-shrink-0"></i> <span class="flex-grow leading-tight break-words">${message}</span>`;
+        
         document.body.appendChild(toast);
-        setTimeout(() => { toast.classList.add('opacity-0', 'transition-opacity'); setTimeout(() => toast.remove(), 300); }, 3000);
+
+        setTimeout(() => {
+            toast.classList.add('opacity-0', '-translate-y-2');
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
     }
     window.showToast = showToast;
 
@@ -1656,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // ==========================================
     const _rentalTimers = {};
 
-    window.startRentalCountdown = function startRentalCountdown(itemName, endTime, rentalId) {
+    window.startRentalCountdown = function startRentalCountdown(itemName, endTime, rentalId, assetId) {
         const section = document.getElementById('countdown-section');
         const list = document.getElementById('countdown-list');
         if (!section || !list) return;
@@ -1681,7 +1725,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (_rentalTimers[rentalId]) clearInterval(_rentalTimers[rentalId]);
 
-        _rentalTimers[rentalId] = setInterval(() => {
+        _rentalTimers[rentalId] = setInterval(async () => {
             const remaining = endTime - Date.now();
             const display = document.getElementById(`countdown-display-${rentalId}`);
             const card = document.getElementById(cardId);
@@ -1691,6 +1735,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (display) display.textContent = 'Selesai';
                 if (card) { card.classList.remove('border-cyan/30'); card.classList.add('border-red-500/30', 'from-red-500/10'); }
 
+                // Kembalikan status aset menjadi tersedia di Supabase
+                if (supabase && assetId) {
+                    try {
+                        await supabase
+                            .from('assets')
+                            .update({ is_available: true, status: 'available' })
+                            .eq('id', assetId);
+                    } catch (e) {
+                        console.warn('Restore asset availability notice:', e);
+                    }
+                }
+
+                // Kembalikan status di cache lokal
+                let allAssets = safeGetStorageJSON('ecopay_all_assets', []);
+                if (Array.isArray(allAssets) && assetId) {
+                    allAssets = allAssets.map(a => String(a.id) === String(assetId) ? { ...a, is_available: true, status: 'available' } : a);
+                    safeSetStorageJSON('ecopay_all_assets', allAssets);
+                }
+
                 // Hapus dari active rentals
                 let ar = safeGetStorageJSON('ecopay_active_rentals', []);
                 if (Array.isArray(ar)) {
@@ -1698,6 +1761,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     safeSetStorageJSON('ecopay_active_rentals', ar);
                 }
 
+                await loadAllAssets();
                 showRentalExpiredModal(itemName);
 
                 addNotification('⏰ Masa Sewa Berakhir', `Masa sewa "${itemName}" telah berakhir. Harap segera kembalikan barang kepada pemilik tepat waktu.`, 'warning');
@@ -1718,7 +1782,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const uid = currentUser ? currentUser.id : null;
         if (Array.isArray(active) && uid) {
             active.filter(r => (r.userId === uid || String(r.userId) === String(uid)) && r.endTime > Date.now())
-                  .forEach(r => startRentalCountdown(r.itemName, r.endTime, r.id));
+                  .forEach(r => startRentalCountdown(r.itemName, r.endTime, r.id, r.assetId));
         }
     };
 

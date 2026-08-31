@@ -89,3 +89,12 @@ input:-webkit-autofill:active {
   caret-color: #ffffff !important;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+/* Toast Notification Mobile Responsive */
+.app-toast-notification {
+  max-width: calc(100vw - 2rem);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  box-sizing: border-box;
+}
