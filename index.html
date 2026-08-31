@@ -54,30 +54,19 @@
     <div id="phone-frame"
         class="relative w-full max-w-full mx-auto min-h-screen bg-[#080d16] shadow-none flex flex-col z-10 overflow-x-hidden md:rounded-2xl md:my-4 md:border md:border-white/10">
 
-        <!-- Status Bar -->
-        <div
-            class="h-6 w-full hidden justify-between items-center px-6 pt-1 text-[10px] font-medium text-gray-400 absolute top-0 left-0 z-50 bg-[#080d16]/90 backdrop-blur-sm pointer-events-none">
-            <span>09:41</span>
-            <div class="flex items-center gap-1.5">
-                <i class="ph-fill ph-cell-signal-full"></i>
-                <i class="ph-fill ph-wifi-high"></i>
-                <i class="ph-fill ph-battery-full"></i>
-            </div>
-        </div>
         <!-- ==============================================
              LAYAR LOGIN
              ============================================== -->
         <div id="login-screen"
-            class="absolute inset-0 z-40 bg-[#080d16] flex flex-col items-center justify-center p-6 transition-opacity duration-700">
-            <div class="w-full max-w-sm mx-auto flex flex-col items-center mt-[-10vh]">
-                <div
-                    class="w-20 h-20 mb-6 rounded-2xl bg-[#080d16] overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.3)] flex items-center justify-center border border-gray-800">
+            class="fixed inset-0 z-50 bg-[#080d16] flex flex-col items-center justify-center p-6 transition-opacity duration-500">
+            <div class="w-full max-w-sm mx-auto flex flex-col items-center">
+                <div class="login-logo-box">
                     <img src="assets/img/ecopay_logo.png" alt="Eco-Pay Logo" class="w-full h-full object-contain">
                 </div>
 
-                <h1 class="text-3xl font-bold text-white mb-2 tracking-tight text-center">Digital <span
+                <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2 tracking-tight text-center">Digital <span
                         class="text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan">ECO-PAY</span></h1>
-                <p class="text-sm text-gray-400 text-center mb-8">Ubah aset idle Anda menjadi cuan.</p>
+                <p class="text-xs sm:text-sm text-gray-400 text-center mb-6 sm:mb-8">Ubah aset idle Anda menjadi cuan.</p>
 
                 <form id="login-form" class="w-full space-y-4" autocomplete="off">
                     <div id="login-error-msg" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-xl flex items-center gap-2">

@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 :root {
   /* Variabel Warna Tema Baru */
   --primary-green: #34A853;
@@ -18,8 +27,53 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-light);
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   /* Mencegah pantulan gulir di HP */
   overscroll-behavior-y: none; 
+}
+
+/* Login Screen Dedicated Styling */
+#login-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #080d16;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+#login-screen.hidden {
+  display: none !important;
+}
+
+.login-logo-box {
+  width: 76px !important;
+  height: 76px !important;
+  max-width: 76px !important;
+  max-height: 76px !important;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  background-color: #080d16;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(52, 168, 83, 0.25);
+  flex-shrink: 0;
+}
+
+.login-logo-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
 }
 
 /* Premium Glassmorphism Card */
