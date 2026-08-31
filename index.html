@@ -79,19 +79,24 @@
                         class="text-transparent bg-clip-text bg-gradient-to-r from-emerald to-cyan">ECO-PAY</span></h1>
                 <p class="text-sm text-gray-400 text-center mb-8">Ubah aset idle Anda menjadi cuan.</p>
 
-                <form id="login-form" class="w-full space-y-4">
+                <form id="login-form" class="w-full space-y-4" autocomplete="off">
+                    <div id="login-error-msg" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs px-4 py-3 rounded-xl flex items-center gap-2">
+                        <i class="ph-bold ph-warning-circle text-base flex-shrink-0"></i>
+                        <span id="login-error-text"></span>
+                    </div>
+
                     <div class="relative">
-                        <i class="ph-fill ph-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="text" id="username" placeholder="Username / Email" required autocomplete="off"
-                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
+                        <i class="ph-fill ph-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+                        <input type="email" id="username" name="email" placeholder="Email Akun" required autocomplete="email"
+                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm transition-colors">
                     </div>
                     <div class="relative">
                         <i class="ph-fill ph-lock-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                        <input type="password" id="password" placeholder="Password" required autocomplete="new-password"
-                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm">
+                        <input type="password" id="password" name="password" placeholder="Password" required autocomplete="current-password"
+                            class="w-full bg-[#030712] border border-gray-800 rounded-xl pl-11 pr-4 py-4 text-white focus:outline-none focus:border-emerald/50 text-sm transition-colors">
                     </div>
-                    <button type="submit"
-                        class="w-full bg-emerald text-darkBg font-bold py-4 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-2">
+                    <button type="submit" id="btn-login-submit"
+                        class="w-full bg-emerald text-darkBg font-bold py-4 rounded-xl hover:bg-emerald/90 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] mt-2 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]">
                         Masuk
                     </button>
                 </form>
@@ -124,11 +129,18 @@
                         <span id="nav-name" class="block text-xs text-gray-400"></span>
                     </div>
 
-                    <div
-                        class="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-full cursor-pointer hover:bg-yellow-500/20 transition-colors">
-                        <i class="ph-fill ph-coin text-yellow-500 text-sm animate-pulse"></i>
-                        <span class="text-xs font-bold text-white"><span id="nav-balance">0</span> <span
-                                class="text-[10px] text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase ml-0.5">Coins</span></span>
+                    <div class="flex items-center gap-2">
+                        <div
+                            class="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 px-3 py-1.5 rounded-full cursor-pointer hover:bg-yellow-500/20 transition-colors">
+                            <i class="ph-fill ph-coin text-yellow-500 text-sm animate-pulse"></i>
+                            <span class="text-xs font-bold text-white"><span id="nav-balance">0</span> <span
+                                    class="text-[10px] text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 uppercase ml-0.5">Coins</span></span>
+                        </div>
+                        <button id="btn-logout" type="button" onclick="logout()" title="Keluar dari akun"
+                            class="flex items-center gap-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 border border-red-500/30 px-3 py-1.5 rounded-full text-xs font-semibold transition-all">
+                            <i class="ph-bold ph-sign-out text-sm"></i>
+                            <span class="hidden sm:inline">Keluar</span>
+                        </button>
                     </div>
                 </div>
             </header>
@@ -539,10 +551,10 @@
              MODAL DAFTAR ULASAN
              ============================================== -->
         <div id="modal-reviews"
-            class="absolute inset-0 z-[100] hidden flex-col justify-end pointer-events-none md:rounded-[2.2rem] overflow-hidden">
-            <div class="absolute inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+            class="fixed inset-0 z-[110] hidden flex-col justify-end pointer-events-none overflow-hidden">
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
                 id="modal-reviews-backdrop" onclick="closeReviewsModal()"></div>
-            <div class="relative bg-[#080d16] border-t border-white/10 rounded-t-3xl w-full h-[75vh] flex flex-col transform translate-y-full transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+            <div class="relative bg-[#080d16] border-t md:border border-white/10 rounded-t-3xl md:rounded-3xl w-full md:w-3/4 lg:w-1/2 md:max-w-lg mx-auto md:mb-10 max-h-[85vh] flex flex-col transform translate-y-full md:translate-y-10 transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
                 id="modal-reviews-panel">
                 <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
                 <button onclick="closeReviewsModal()"
@@ -748,6 +760,83 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             MODAL INPUT TOKEN LISTRIK & AIR
+             ============================================== -->
+        <div id="modal-utilitas"
+            class="fixed inset-0 z-[120] hidden flex-col justify-end pointer-events-none overflow-hidden">
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300 opacity-0"
+                id="modal-utilitas-backdrop" onclick="closeUtilitasModal()"></div>
+            <div class="relative bg-[#080d16] border-t md:border border-white/10 rounded-t-3xl md:rounded-3xl w-full md:w-3/4 lg:w-1/2 md:max-w-lg mx-auto md:mb-10 max-h-[85vh] flex flex-col transform translate-y-full md:translate-y-10 transition-transform duration-300 ease-out pointer-events-auto shadow-[0_-10px_40px_rgba(0,0,0,0.5)]"
+                id="modal-utilitas-panel">
+                <div class="w-10 h-1 bg-gray-700 rounded-full mx-auto mt-3 mb-2 flex-shrink-0"></div>
+                <button onclick="closeUtilitasModal()"
+                    class="absolute top-4 right-4 text-gray-500 hover:text-white bg-white/5 rounded-full w-8 h-8 flex items-center justify-center z-10"><i
+                        class="ph-bold ph-x text-sm"></i></button>
+
+                <div class="px-5 pb-6 pt-2 flex flex-col">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-cyan/20 flex items-center justify-center text-cyan">
+                            <i class="ph-fill ph-lightning text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 id="utilitas-title" class="text-lg font-bold text-white">Beli Token Listrik PLN</h2>
+                            <p class="text-[11px] text-gray-400">Masukkan nomor meteran / ID pelanggan Anda</p>
+                        </div>
+                    </div>
+
+                    <form id="form-utilitas" class="space-y-4 mt-2">
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Jenis Layanan</label>
+                            <select id="utilitas-jenis" class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-cyan/50">
+                                <option value="Listrik PLN">Token Listrik PLN</option>
+                                <option value="Air PDAM">Tagihan / Token Air PDAM</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-widest">Nomor Meter / ID Pelanggan</label>
+                            <input type="text" id="utilitas-nomor" required placeholder="Contoh: 1423 8892 1029"
+                                class="w-full bg-[#030712] border border-gray-800 rounded-xl px-4 py-3.5 text-white font-mono text-sm tracking-wider focus:outline-none focus:border-cyan/50">
+                        </div>
+
+                        <div class="bg-cyan/10 border border-cyan/30 rounded-xl p-3 flex gap-2.5 items-center">
+                            <i class="ph-fill ph-info text-cyan text-lg flex-shrink-0"></i>
+                            <p class="text-[10px] text-cyan leading-relaxed">Voucher akan langsung diproses dan token/struk pengisian akan dikirimkan ke riwayat notifikasi.</p>
+                        </div>
+
+                        <button type="submit" id="btn-submit-utilitas"
+                            class="w-full bg-cyan text-darkBg font-bold py-3.5 rounded-xl hover:bg-cyan/90 transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] text-xs uppercase tracking-wider cursor-pointer">
+                            Konfirmasi & Proses
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==============================================
+             MODAL PERINGATAN SEWA BERAKHIR
+             ============================================== -->
+        <div id="modal-rental-expired"
+            class="fixed inset-0 z-[130] hidden flex-col items-center justify-center p-5 pointer-events-none overflow-hidden">
+            <div class="fixed inset-0 bg-darkBg/90 backdrop-blur-sm pointer-events-auto transition-opacity duration-300"
+                id="modal-rental-expired-backdrop" onclick="closeRentalExpiredModal()"></div>
+            <div class="relative bg-[#080d16] border border-red-500/30 rounded-3xl w-full max-w-sm p-6 flex flex-col items-center text-center shadow-[0_0_40px_rgba(239,68,68,0.2)] pointer-events-auto z-10 animate-fade-in"
+                id="modal-rental-expired-panel">
+                <div class="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 mb-4 border border-red-500/40">
+                    <i class="ph-fill ph-warning-circle text-3xl animate-bounce"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white mb-1">Masa Sewa Berakhir!</h3>
+                <p class="text-xs text-gray-300 mb-4 leading-relaxed">
+                    Masa sewa untuk barang <strong id="rental-expired-name" class="text-red-400">Barang</strong> telah habis. Harap segera kembalikan barang kepada pemilik tepat waktu.
+                </p>
+                <button type="button" onclick="closeRentalExpiredModal()"
+                    class="w-full bg-red-500 text-white font-bold py-3 rounded-xl hover:bg-red-600 transition-all text-xs uppercase tracking-wide">
+                    Saya Mengerti
+                </button>
             </div>
         </div>
     </div>

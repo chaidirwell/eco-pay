@@ -78,3 +78,14 @@ body {
 .map-tiles {
   filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(100%) sepia(20%) hue-rotate(180deg);
 }
+
+/* Dark theme browser autofill fix */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #030712 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
