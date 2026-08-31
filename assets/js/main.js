@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ? `<div class="absolute top-2 right-2 bg-emerald/90 text-white text-[9px] font-bold px-2 py-1 rounded border border-emerald/50 uppercase tracking-widest animate-pulse z-20">Aset Anda</div>`
             : '';
 
-        let categoryBadge = asset.is_promoted
+        let categoryBadge = (isSlider && asset.is_promoted)
             ? `<div class="absolute top-2 left-2 bg-gradient-to-r from-yellow-500 to-amber-600 text-white text-[9px] font-bold px-2 py-1 rounded border border-yellow-300/50 uppercase tracking-widest shadow-lg shadow-yellow-500/20 z-20"><i class="ph-fill ph-star text-[8px] mr-0.5"></i> Rekomendasi</div>`
             : `<div class="absolute top-2 left-2 bg-darkBg/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded border border-white/10 uppercase tracking-widest z-20">${asset.category || 'Umum'}</div>`;
 
