@@ -107,3 +107,11 @@ input:-webkit-autofill:active {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Mobile Header Layout Optimization */
+@media (max-width: 640px) {
+  header {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+}
