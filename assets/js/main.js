@@ -984,6 +984,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const rateEl = document.getElementById("modal-rate");
         const totalEl = document.getElementById("modal-total");
         const locLink = document.getElementById("modal-location-link");
+        const locTextEl = document.getElementById("modal-location-text");
         const cashbackEl = document.getElementById("modal-cashback");
         const coverEl = document.getElementById("modal-cover");
         const durationEl = document.getElementById("modal-duration");
@@ -991,7 +992,26 @@ document.addEventListener('DOMContentLoaded', function () {
         if (titleEl) titleEl.innerText = currentItemName;
         if (rateEl) rateEl.innerText = currentRatePerDay.toLocaleString('id-ID');
         if (totalEl) totalEl.innerText = currentRatePerDay.toLocaleString('id-ID');
-        if (locLink) locLink.innerText = assetData.location || "Lokasi Terdaftar";
+
+        const locationString = assetData.location || "Lokasi Terdaftar";
+        if (locTextEl) {
+            locTextEl.innerText = locationString;
+        } else if (locLink) {
+            locLink.innerText = locationString;
+        }
+
+        if (locLink) {
+            locLink.setAttribute("target", "_blank");
+            locLink.setAttribute("rel", "noopener noreferrer");
+
+            // Buat URL Google Maps berdasarkan koordinat atau nama lokasi
+            const mapsUrl = (assetData.lat && assetData.lng)
+                ? `https://www.google.com/maps/search/?api=1&query=${assetData.lat},${assetData.lng}`
+                : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationString)}`;
+
+            locLink.setAttribute("href", mapsUrl);
+        }
+
         if (cashbackEl) cashbackEl.innerText = `${Math.floor(currentRatePerDay * 0.05).toLocaleString('id-ID')} Coins`;
         if (durationEl) durationEl.value = 1;
 

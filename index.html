@@ -607,9 +607,12 @@
 
                     <h2 id="modal-title" class="text-xl font-bold text-white leading-tight mb-2">Nama Barang</h2>
                     <div class="flex items-center gap-2 mb-5 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
-                        <i class="ph-fill ph-map-pin text-gray-400 text-sm"></i>
-                        <a id="modal-location-link" href="#" target="_blank"
-                            class="text-[11px] text-cyan hover:underline font-medium break-words truncate flex-grow">Lokasi...</a>
+                        <i class="ph-fill ph-map-pin text-cyan text-sm flex-shrink-0"></i>
+                        <a id="modal-location-link" href="#" target="_blank" rel="noopener noreferrer"
+                            class="text-[11px] text-cyan hover:underline hover:text-cyan/80 font-medium break-words truncate flex-grow flex items-center justify-between gap-1 group" title="Buka di Google Maps">
+                            <span id="modal-location-text" class="truncate">Lokasi...</span>
+                            <i class="ph-bold ph-arrow-square-out text-xs text-cyan opacity-70 group-hover:opacity-100 flex-shrink-0"></i>
+                        </a>
                     </div>
 
                     <div class="space-y-4">
