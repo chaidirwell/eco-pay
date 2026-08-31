@@ -999,11 +999,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("modal-close-icon")?.addEventListener("click", closeBorrowModal);
 
     document.getElementById("modal-duration")?.addEventListener("input", function () {
-        const total = (parseInt(this.value) || 1) * currentRatePerDay;
+        const duration = Math.max(1, parseInt(this.value) || 1);
+        const total = duration * currentRatePerDay;
+        const cashbackCoins = Math.floor(total / 100);
         const totalEl = document.getElementById("modal-total");
         const cashbackEl = document.getElementById("modal-cashback");
         if (totalEl) totalEl.innerText = total.toLocaleString('id-ID');
-        if (cashbackEl) cashbackEl.innerText = `${Math.floor(total * 0.05).toLocaleString('id-ID')} Coins`;
+        if (cashbackEl) cashbackEl.innerText = `${cashbackCoins.toLocaleString('id-ID')} Coins`;
     });
 
     // Event delegation tombol pinjam ke seluruh dokumen
@@ -1060,7 +1062,8 @@ document.addEventListener('DOMContentLoaded', function () {
             locLink.setAttribute("href", mapsUrl);
         }
 
-        if (cashbackEl) cashbackEl.innerText = `${Math.floor(currentRatePerDay * 0.05).toLocaleString('id-ID')} Coins`;
+        const initialCashback = Math.floor(currentRatePerDay / 100);
+        if (cashbackEl) cashbackEl.innerText = `${initialCashback.toLocaleString('id-ID')} Coins`;
         if (durationEl) durationEl.value = 1;
 
         if (coverEl) {
@@ -1093,9 +1096,9 @@ document.addEventListener('DOMContentLoaded', function () {
         submitBtn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i> Memproses...';
 
         try {
-            const duration = parseInt(document.getElementById("modal-duration")?.value) || 1;
+            const duration = Math.max(1, parseInt(document.getElementById("modal-duration")?.value) || 1);
             const totalCost = duration * currentRatePerDay;
-            const cashback = Math.floor(totalCost * 0.05);
+            const cashback = Math.floor(totalCost / 100);
 
             const paymentMethod = document.querySelector('input[name="payment-method"]:checked')?.value || "qris";
 
